@@ -469,25 +469,43 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 <section class="slide fB">
   <div class="dpatch" style="right:-90px;top:-80px;width:440px;height:340px;--c:rgba(149,201,113,.36);--d:.2s"></div>
   <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">Next 3</div>
-  <h2 class="bloom" style="--d:.22s;font-size:56px;line-height:1.35;position:relative;z-index:2">もっと深めたい人へ——試すと理解が進む<span class="pxmark" style="--d:.9s">3つ</span></h2>
-  <div class="duo" style="margin-top:40px">
+  <h2 class="bloom" style="--d:.22s;font-size:56px;line-height:1.35;position:relative;z-index:2">もっと深めたい人へ——コピペで学べる<span class="pxmark" style="--d:.9s">3つ</span></h2>
+  <p class="bloom" style="--d:.4s;font-size:19px;line-height:1.9;margin-top:14px;position:relative;z-index:2">各カード右上のコピーで、<b>学び方から動作確認まで一式のプロンプト</b>が入る。そのまま貼れば始まる(【 】は自分の内容に置き換え可。例のままでもOK)。</p>
+  <div class="duo" style="margin-top:30px">
     <div class="wcard step" data-step="1" style="--wc:rgba(250,179,80,.42)">
-      <button class="copybtn" type="button" data-copy="Claude Code の「スキル(SKILL.md)」の仕組みを、初心者向けに教えてください。そのうえで、私がよく使う〇〇(例: 自社のブランドカラーと、資料の作り方のルール)を、次回から自動で使えるスキルとして作成・保存してください。保存場所と、次回それが自動で使われる仕組みも説明してください。"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
+      <button class="copybtn" type="button" data-copy="Claude Code の「スキル(SKILL.md)」について学びながら、実際に1つ作りたいです。私はエンジニアではないので、初心者向けにお願いします。次の順で、1ステップずつ、私が「できた」と返してから次に進んでください。
+(1) まず、スキルとは何か、SKILL.md というファイルがどこに保存され、どういう仕組みで次回から自動的に読み込まれるのかを、たとえ話を交えて短く説明してください。
+(2) 次に、私がよく使うルールをスキルにします。内容は「【例: 自社のブランドカラー(メイン=緑、アクセント=オレンジ)と、資料づくりのルール(1スライド1メッセージ・数字は大きく)】」です。足りない情報があれば私にヒアリングしながら、一緒に SKILL.md の中身を作ってください。
+(3) 作ったスキルを正しい場所に保存し、保存場所のパスを教えてください。
+(4) 最後に、次回どういう頼み方をすればこのスキルが自動で使われるのか、うまく使われたかの確かめ方も含めて教えてください。
+途中で分からない言葉が出たら質問します。エラーが出たら画面のキャプチャを貼るので、一緒に直してください。"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
       <div class="p-tag" style="color:var(--o2)">① スキルを学ぶ</div>
-      <p style="font-size:17.5px">よく使うルール(ブランドカラー・資料フォーマット等)を「スキル」として保存すると、<b>次回から自動で使われる</b>。プロンプトは右上からコピー。</p>
+      <p style="font-size:17.5px">よく使うルールを「スキル(SKILL.md)」として保存すると、<b>次回から自動で使われる</b>。仕組みの説明→一緒に作成→保存→次回の使い方まで、プロンプト1本で。</p>
     </div>
     <div class="wcard step" data-step="2" style="--wc:rgba(47,109,176,.4)">
-      <button class="copybtn" type="button" data-copy="Google Cloud で、Google スプレッドシート(Google Sheets API)と Google ドキュメント(Google Docs API)も有効にして、Claude Code から編集できるようにしたいです。必要な API の有効化と、認証情報の追加・設定の手順を、初心者向けに一つずつ、画面のどこを押すかも含めて教えてください。"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
-      <div class="p-tag" style="color:var(--bl)">② Google Cloud をもっと</div>
-      <p style="font-size:17.5px">Sheets・Docs の API も有効にすると、Code が<b>表計算や文書を直接</b>あつかえるように。プロンプトは右上からコピー。</p>
+      <button class="copybtn" type="button" data-copy="いま、Claude Code から Google Drive のファイルを読み書きできる状態です(Google Cloud のプロジェクトと OAuth クライアントIDは作成済み)。これに加えて、Google スプレッドシート(Google Sheets API)と Google ドキュメント(Google Docs API)も Claude Code から編集できるようにしたいです。私はエンジニアではないので、初心者向けに、画面のどこを押すかまで具体的に、1ステップずつ案内してください。私が「できた」と返してから次に進んでください。
+(1) Google Cloud コンソールで、既存のプロジェクトに Google Sheets API と Google Docs API を追加で有効化する。
+(2) OAuth 同意画面やスコープの設定に、追加・変更が必要かを確認し、必要なら一緒に直す。
+(3) 既存の OAuth クライアントID(クライアントIDとシークレット)がそのまま使えるのか、作り直しや設定変更が必要なのかを教えてもらい、必要な作業をする。
+(4) claude.ai のコネクタ設定側で必要な変更があれば行い、接続し直す。
+(5) 最後に動作確認として、私の Google スプレッドシート「【スプレッドシートの名前】」を開いて、1枚目のシートの A1 セルに「接続テストOK」と入力してもらう。
+エラーや見たことのない画面が出たらキャプチャを貼るので、一緒に直してください。"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
+      <div class="p-tag" style="color:var(--bl)">② スプレッドシートもつなぐ</div>
+      <p style="font-size:17.5px">STEP4で作った OAuth の許可証に <b>Sheets・Docs API を追加</b>し、Code が表計算や文書を直接あつかえるように。API有効化→OAuth確認→接続テストまで一式。</p>
     </div>
     <div class="wcard step" data-step="3" style="--wc:rgba(149,201,113,.45)">
-      <button class="copybtn" type="button" data-copy="GAS(Google Apps Script)とは何かを、初心者向けに教えてください。そのうえで、私の Google スプレッドシートで〇〇(例: 毎週の売上を自動で集計してグラフにする)をやりたいので、GAS のコードを書いて、どこに貼り付けて(スプレッドシートの「拡張機能 → Apps Script」)、どう動かすかまで、一つずつ教えてください。"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
+      <button class="copybtn" type="button" data-copy="GAS(Google Apps Script)を学びながら、私のスプレッドシートの定型作業をひとつ自動化したいです。私はエンジニアではなく、コードも書けません。初心者向けに、1ステップずつ、私が「できた」と返してから次に進んでください。
+(1) まず、GAS とは何か、何ができて何が苦手か、費用はかかるのかを、たとえ話を交えて短く説明してください。
+(2) 私がやりたいことは「【例: 毎週月曜の朝に、売上シートの先週分を自動で集計して、集計シートに追記し、グラフを更新する】」です。これをどう実現するか、方針を先に分かりやすく説明してください。
+(3) 必要な GAS のコードを書いてください。コードには、あとで私が読んでも分かるように日本語のコメントを付けてください。
+(4) スプレッドシートの「拡張機能 → Apps Script」を開くところから、コードをどこに貼り付けて、どう保存し、どう実行するかを、画面のどこを押すかまで具体的に教えてください。初回実行時に出る権限の許可画面の進み方も教えてください。
+(5) 動作確認のやり方と、毎週自動で動かすためのトリガー設定まで案内してください。
+エラーが出たら、エラーメッセージの画面を貼るので、一緒に直してください。"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
       <div class="p-tag">③ GAS を学ぶ</div>
-      <p style="font-size:17.5px">GAS(Google Apps Script)で、スプレッドシートの<b>定型作業を自動化</b>。コードは Code に書いてもらう。プロンプトは右上からコピー。</p>
+      <p style="font-size:17.5px">GAS(Google Apps Script)で、スプレッドシートの<b>定型作業を自動化</b>。仕組みの説明→コード作成→貼り付け場所→権限許可→毎週の自動実行まで一式。</p>
     </div>
   </div>
-  <p class="step" data-step="4" style="font-size:17px;color:#8a938c;margin-top:36px;position:relative;z-index:2">参考: docs.claude.com(セットアップ)・support.claude.com(Drive連携) ※最新は公式かチャットで確認。</p>
+  <p class="step" data-step="4" style="font-size:17px;color:#8a938c;margin-top:32px;position:relative;z-index:2">参考: docs.claude.com(セットアップ)・support.claude.com(Drive連携) ※最新は公式かチャットで確認。</p>
 </section>
 
 <!-- ===== 13. おわりに(一枝フィナーレ) ===== -->
