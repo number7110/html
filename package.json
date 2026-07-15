@@ -1,0 +1,8 @@
+{
+  "name": "ai-native-sapling-html",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@vercel/blob": "^2.6.1"
+  }
+}

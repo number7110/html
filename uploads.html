@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTMLアップロード / 一覧 — ドリコム</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F9FBFA; --card:#ffffff;
+  --o1:#FAB350; --o2:#F18B00;
+  --g1:#95C971; --g2:#83AF64; --g3:#37761C;
+  --txt:#646363; --head:#3d4540; --line:#e3e9e4; --red:#D14343;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--txt);
+  -webkit-font-smoothing:antialiased;line-height:1.6;min-height:100vh}
+.wrap{max-width:920px;margin:0 auto;padding:40px 24px 80px}
+
+/* ヘッダー（虹罫線） */
+.hd{position:relative;display:flex;align-items:center;gap:16px;
+  padding:14px 0 14px 26px;border-bottom:2.5px solid #b3b3b3;margin-bottom:32px}
+.hd::before{content:"";position:absolute;left:0;top:0;bottom:0;width:9px;
+  background:linear-gradient(180deg,#7FB2DE 0%,#89BD8C 10%,#A7CA07 20%,#F9D703 30%,#F09700 40%,#E55809 50%,#CB1C23 60%,#E97395 70%,#E4ADC6 80%,#CED1D6 90%,#94BAE1 100%)}
+.hd h1{font-size:26px;color:var(--head);font-weight:900;letter-spacing:.02em}
+.hd .sub{font-size:13px;color:#9aa39c;margin-top:2px}
+
+/* アップロードカード */
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:26px;box-shadow:0 2px 14px rgba(55,118,28,.05);margin-bottom:36px}
+.card h2{font-size:16px;color:var(--head);font-weight:700;margin-bottom:16px}
+
+.drop{border:2px dashed #cdd8ce;border-radius:12px;padding:34px 20px;text-align:center;
+  cursor:pointer;transition:.18s;background:#fbfdfb}
+.drop:hover,.drop.over{border-color:var(--g2);background:#f2f8ee}
+.drop .ic{font-size:34px;line-height:1}
+.drop p{margin-top:10px;font-size:14px;color:var(--txt)}
+.drop .hint{font-size:12px;color:#a8b1aa;margin-top:4px}
+.drop b{color:var(--g3)}
+#file{display:none}
+
+.row{display:flex;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap}
+.fname{font-size:13.5px;color:var(--head);font-weight:500;flex:1;min-width:160px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn{border:none;border-radius:9px;padding:11px 22px;font-size:14px;font-weight:700;
+  font-family:inherit;cursor:pointer;color:#fff;
+  background:linear-gradient(135deg,var(--g1),var(--g3));transition:.15s;white-space:nowrap}
+.btn:hover:not(:disabled){filter:brightness(1.06);transform:translateY(-1px)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.msg{font-size:13px;margin-top:12px;min-height:18px}
+.msg.ok{color:var(--g3)}
+.msg.err{color:var(--red)}
+
+/* 一覧 */
+.list-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.list-head h2{font-size:16px;color:var(--head);font-weight:700}
+.reload{background:none;border:1px solid var(--line);border-radius:8px;padding:6px 14px;
+  font-size:12.5px;color:var(--txt);cursor:pointer;font-family:inherit;transition:.15s}
+.reload:hover{border-color:var(--g2);color:var(--g3)}
+
+ul{list-style:none}
+.item{display:flex;align-items:center;gap:14px;background:var(--card);
+  border:1px solid var(--line);border-radius:11px;padding:15px 18px;margin-bottom:10px;
+  text-decoration:none;color:inherit;transition:.15s}
+.item:hover{border-color:var(--g2);box-shadow:0 3px 12px rgba(55,118,28,.09);transform:translateY(-1px)}
+.item .doc{width:38px;height:38px;border-radius:9px;flex-shrink:0;display:grid;place-items:center;
+  background:linear-gradient(135deg,#fde9cc,#fac97f);color:var(--o2);font-size:18px;font-weight:900}
+.item .meta{flex:1;min-width:0}
+.item .t{font-size:14.5px;font-weight:700;color:var(--head);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item .d{font-size:12px;color:#a8b1aa;margin-top:2px}
+.item .open{font-size:12px;color:var(--g3);font-weight:700;flex-shrink:0;opacity:.7}
+.item:hover .open{opacity:1}
+.empty{text-align:center;color:#a8b1aa;font-size:14px;padding:40px 0}
+.loading{text-align:center;color:#a8b1aa;font-size:14px;padding:30px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hd">
+    <div>
+      <h1>HTML アップロード</h1>
+      <div class="sub">Basic認証を通過したメンバーのみ利用・閲覧できます</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>新しいHTMLをアップロード</h2>
+    <label class="drop" id="drop">
+      <div class="ic">📄</div>
+      <p><b>クリックして選択</b> または ここにドラッグ＆ドロップ</p>
+      <div class="hint">.html ファイル / 最大 5MB</div>
+      <input type="file" id="file" accept=".html,.htm,text/html">
+    </label>
+    <div class="row">
+      <span class="fname" id="fname">ファイル未選択</span>
+      <button class="btn" id="upload" disabled>アップロード</button>
+    </div>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <div class="list-head">
+    <h2>アップロード済み一覧</h2>
+    <button class="reload" id="reload">↻ 更新</button>
+  </div>
+  <ul id="list"><li class="loading">読み込み中…</li></ul>
+</div>
+
+<script>
+const fileInput = document.getElementById('file');
+const drop = document.getElementById('drop');
+const fname = document.getElementById('fname');
+const uploadBtn = document.getElementById('upload');
+const msg = document.getElementById('msg');
+const listEl = document.getElementById('list');
+let selected = null;
+
+function setFile(f){
+  selected = f || null;
+  fname.textContent = f ? f.name : 'ファイル未選択';
+  uploadBtn.disabled = !f;
+  msg.textContent = '';
+  msg.className = 'msg';
+}
+
+fileInput.addEventListener('change', e => setFile(e.target.files[0]));
+
+['dragenter','dragover'].forEach(ev =>
+  drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave','drop'].forEach(ev =>
+  drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => {
+  const f = e.dataTransfer.files && e.dataTransfer.files[0];
+  if (f) setFile(f);
+});
+
+uploadBtn.addEventListener('click', async () => {
+  if (!selected) return;
+  uploadBtn.disabled = true;
+  msg.className = 'msg';
+  msg.textContent = 'アップロード中…';
+  try {
+    const res = await fetch('/api/upload?filename=' + encodeURIComponent(selected.name), {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/html' },
+      body: selected,
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+    msg.className = 'msg ok';
+    msg.textContent = '✓ アップロードしました：' + (data.name || selected.name);
+    setFile(null);
+    fileInput.value = '';
+    loadList();
+  } catch (err) {
+    msg.className = 'msg err';
+    msg.textContent = '✕ ' + err.message;
+    uploadBtn.disabled = false;
+  }
+});
+
+function fmtDate(s){
+  const d = new Date(s);
+  if (isNaN(d)) return '';
+  const p = n => String(n).padStart(2,'0');
+  return `${d.getFullYear()}/${p(d.getMonth()+1)}/${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+function fmtSize(n){
+  if (n == null) return '';
+  if (n < 1024) return n + ' B';
+  if (n < 1024*1024) return (n/1024).toFixed(1) + ' KB';
+  return (n/1024/1024).toFixed(1) + ' MB';
+}
+
+async function loadList(){
+  listEl.innerHTML = '<li class="loading">読み込み中…</li>';
+  try {
+    const res = await fetch('/api/list');
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'error');
+    const items = data.items || [];
+    if (!items.length){
+      listEl.innerHTML = '<li class="empty">まだアップロードされたHTMLはありません</li>';
+      return;
+    }
+    listEl.innerHTML = '';
+    for (const it of items){
+      const a = document.createElement('a');
+      a.className = 'item';
+      a.href = '/api/view?u=' + encodeURIComponent(it.url);
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.innerHTML =
+        '<div class="doc">&lt;/&gt;</div>' +
+        '<div class="meta">' +
+          '<div class="t"></div>' +
+          '<div class="d"></div>' +
+        '</div>' +
+        '<div class="open">全画面で開く ↗</div>';
+      a.querySelector('.t').textContent = it.name;
+      a.querySelector('.d').textContent =
+        [fmtDate(it.uploadedAt), fmtSize(it.size)].filter(Boolean).join(' ・ ');
+      listEl.appendChild(a);
+    }
+  } catch (err) {
+    listEl.innerHTML = '<li class="empty">一覧の取得に失敗しました：' + err.message + '</li>';
+  }
+}
+
+document.getElementById('reload').addEventListener('click', loadList);
+loadList();
+</script>
+</body>
+</html>
