@@ -172,6 +172,12 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 .slide.in .csit{animation:catseq-s 36s steps(1) infinite}
 @keyframes catseq-w{0%,39%{opacity:1}40%,53%{opacity:0}54%,100%{opacity:1}}
 @keyframes catseq-s{0%,39%{opacity:0}40%,53%{opacity:1}54%,100%{opacity:0}}
+/* Clawd(Claude Codeのキャラ): ポップ登場+2コマの跳ね+まばたき */
+.clawd{position:absolute;z-index:1;pointer-events:none}
+.clawd .hop{animation:clhop .9s steps(1) infinite alternate}
+@keyframes clhop{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+.clawd .blink{animation:clblink 4.2s steps(1) infinite}
+@keyframes clblink{0%,88%{opacity:1}89%,100%{opacity:0}}
 
 
 .nav{position:absolute;bottom:0;left:0;right:0;height:62px;display:flex;align-items:center;
@@ -1056,6 +1062,30 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 <!-- ===== 12. もっと深めたい ===== -->
 <section class="slide fB">
   <div class="dpatch" style="right:-90px;top:-80px;width:420px;height:320px;--c:rgba(149,201,113,.36);--d:.2s"></div>
+  <!-- Clawd(Claude Codeのキャラクター): みんな使えるようになったお祝いに登場 -->
+  <div class="clawd bloom" style="--d:.7s;right:170px;top:88px;width:135px;height:100px">
+    <div class="hop">
+      <svg width="135" height="90" viewBox="0 0 15 10" shape-rendering="crispEdges">
+        <rect x="6" y="0" width="2" height="2" fill="#F18B00"/>
+        <rect x="2" y="2" width="1" height="1" fill="#F18B00"/><rect x="12" y="2" width="1" height="1" fill="#F18B00"/>
+        <rect x="3" y="3" width="1" height="1" fill="#F18B00"/><rect x="11" y="3" width="1" height="1" fill="#F18B00"/>
+        <rect x="6" y="2" width="2" height="2" fill="#F18B00"/>
+        <rect x="4" y="4" width="7" height="1" fill="#F18B00"/>
+        <rect x="1" y="5" width="13" height="2" fill="#F18B00"/>
+        <rect x="4" y="7" width="7" height="1" fill="#F18B00"/>
+        <rect x="3" y="8" width="1" height="1" fill="#F18B00"/><rect x="2" y="9" width="1" height="1" fill="#F18B00"/>
+        <rect x="10" y="8" width="1" height="1" fill="#F18B00"/><rect x="11" y="9" width="1" height="1" fill="#F18B00"/>
+        <rect x="5" y="8" width="1" height="2" fill="#F18B00"/>
+        <rect x="9" y="8" width="1" height="2" fill="#F18B00"/>
+        <g class="blink">
+          <rect x="5" y="5" width="1" height="1" fill="#3d4540"/>
+          <rect x="9" y="5" width="1" height="1" fill="#3d4540"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div class="sd" style="position:absolute;right:140px;top:76px;width:10px;height:10px;background:var(--y);--sdl:.4s"></div>
+  <div class="sd" style="position:absolute;right:330px;top:168px;width:10px;height:10px;background:var(--y);--sdl:1.8s"></div>
   <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">Next 9</div>
   <h2 class="bloom" style="--d:.22s;font-size:52px;line-height:1.35;position:relative;z-index:2">あとで試せる——持ち帰りメニュー<span class="pxmark" style="--d:.9s">9つ</span></h2>
   <p class="bloom" style="--d:.4s;font-size:18px;line-height:1.75;margin-top:10px;position:relative;z-index:2">①〜⑦は、右上のコピーで<b>前提の確認→本編→振り返りまで一式の長文プロンプト</b>が入る。今日の記憶が薄れていても、そのまま貼れば続きから始められる(【 】は置き換え可。例のままでもOK)。</p>
