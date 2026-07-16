@@ -162,16 +162,17 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 /* 猫: ゆっくり歩き→途中で座って一休み→また歩き出す(36s周期) */
 .pxcat{position:absolute;z-index:1;pointer-events:none;opacity:0;width:126px;height:90px}
 .pxcat>div{position:absolute;left:0;top:0;opacity:0}
-.slide.in .pxcat{opacity:1;animation:catwalk 36s steps(44) infinite}
+.slide.in .pxcat{opacity:1;animation:catwalk 36s infinite}
 @keyframes catwalk{
-  0%{transform:translate(0,0)}
-  40%,54%{transform:translate(-1160px,0)}
+  0%{transform:translate(0,0);animation-timing-function:steps(28)}
+  27%{transform:translate(-720px,0)}
+  41%{transform:translate(-720px,0);animation-timing-function:steps(62)}
   100%{transform:translate(-2320px,0)}
 }
 .slide.in .cwalk{animation:catseq-w 36s steps(1) infinite}
 .slide.in .csit{animation:catseq-s 36s steps(1) infinite}
-@keyframes catseq-w{0%,39%{opacity:1}40%,53%{opacity:0}54%,100%{opacity:1}}
-@keyframes catseq-s{0%,39%{opacity:0}40%,53%{opacity:1}54%,100%{opacity:0}}
+@keyframes catseq-w{0%,26%{opacity:1}27%,40%{opacity:0}41%,100%{opacity:1}}
+@keyframes catseq-s{0%,26%{opacity:0}27%,40%{opacity:1}41%,100%{opacity:0}}
 /* Clawd(Claude Codeのキャラ): ポップ登場+2コマの跳ね+まばたき */
 .clawd{position:absolute;z-index:1;pointer-events:none}
 .clawd .hop{animation:clhop .9s steps(1) infinite alternate}
