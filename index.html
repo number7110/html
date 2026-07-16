@@ -312,11 +312,33 @@ h1 .acc-g{color:var(--g3)} h1 .acc-o{color:var(--o2)}
 .pagenum-dots{display:flex;gap:8px}
 .pagenum-dots .dot{width:9px;height:9px;border-radius:50%;background:#dfe5e0;cursor:pointer;transition:all .3s}
 .pagenum-dots .dot.on{background:var(--o2);transform:scale(1.35)}
+
+/* ===== NISHIKI 錦鯉の池(表紙のみ・drecom-deck-nishiki より移植) ===== */
+#pond{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:1;transition:opacity 1.2s ease;
+  background:
+    radial-gradient(1500px 950px at 50% 40%,#F8FCFA 0%,#EEF6F2 52%,#E3EFE9 100%),
+    linear-gradient(180deg,#F4FAF7,#EAF3EE)}
+#pond .dapple{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;
+  background:radial-gradient(circle,#ffffff 0%,rgba(255,255,255,0) 70%);
+  animation:dap 26s ease-in-out infinite alternate}
+@keyframes dap{from{transform:translate(0,0) scale(1)}to{transform:translate(90px,-60px) scale(1.15)}}
+#koiCanvas{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:1;transition:opacity 1.2s ease}
+.koi-off #pond,.koi-off #koiCanvas{opacity:0}
+/* 表紙は錦鯉のみ: Saplingの木(種・幹・花)は隠し、2ページ目以降でフェードイン */
+#grove{transition:opacity 1.2s ease}
+#stage:not(.koi-off) #grove{opacity:0}
 </style>
 </head>
 <body>
 <div id="viewport">
 <div id="stage">
+<!-- 池(表紙のみ表示): 水面グラデ+木漏れ日2つ -->
+<div id="pond">
+  <div class="dapple" style="left:12%;top:8%;width:640px;height:520px"></div>
+  <div class="dapple" style="right:6%;bottom:4%;width:760px;height:600px;animation-delay:-13s;animation-duration:31s"></div>
+</div>
+<!-- 錦鯉Canvas -->
+<canvas id="koiCanvas" width="1920" height="1080"></canvas>
 <!-- 水彩/水墨フィルタ+ペタルシンボル(必須・削除しない) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <filter id="wcEdge" x="-25%" y="-25%" width="150%" height="150%">
@@ -527,7 +549,7 @@ h1 .acc-g{color:var(--g3)} h1 .acc-o{color:var(--o2)}
 <div class="pageno num"><span id="pgno">1</span> / <span id="pgtotal">3</span></div>
 
 <!-- ===== 1. 表紙 ===== -->
-<section class="slide fT title-slide active in">
+<section class="slide fT title-slide active in" data-koi="shiro-dai" data-koi-count="4">
   <div class="title-left">
     <h1 class="rvL" style="--d:.15s;font-size:88px">AIネイティブな<span class="acc-g">組織</span>とは</h1>
   </div>
@@ -938,7 +960,8 @@ h1 .acc-g{color:var(--g3)} h1 .acc-o{color:var(--o2)}
 <script>
 /* ===== ステージを画面にフィット ===== */
 const stage=document.getElementById('stage');
-function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);
+let fitScale=1;
+function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);fitScale=s;
   stage.style.transform=`translate(-50%,-50%) scale(${s})`;}
 addEventListener('resize',fit);fit();
 
@@ -1009,6 +1032,321 @@ function buildChart(i){
   }
 }
 
+/* ============================================================
+   錦鯉エンジン(NISHIKI・削除/改変しない)
+   Canvas一枚に「影→尾びれ→胸びれ→胴(斑はクリップ)→目」の順で描く。
+   胴のシルエットは13節の背骨チェーン+幅プロファイル。頭のヨー振動が
+   チェーンを伝ってS字の泳ぎになる。波紋は 泳跡/旋回/口上げ/指先 の4種。
+============================================================ */
+const kcv=document.getElementById('koiCanvas'),kx=kcv.getContext('2d');
+const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const KC={o:'#F18B00',oL:'#FAB350',y:'#F4C74F',g1:'#95C971',g3:'#37761C',
+          pk:'#d2356f',bl:'#2f6db0',shiro:'#FDFCF5',sumi:'#44474C'};
+/* 背景用の淡色トーン: トークン色を白へ寄せて描く(鯉の上に本文が乗る前提) */
+const mixW=(hex,k)=>{const n=parseInt(hex.slice(1),16),m=c=>Math.round(c+(255-c)*k);
+  return '#'+((m(n>>16&255)<<16|m(n>>8&255)<<8|m(n&255)).toString(16).padStart(6,'0'));};
+const KP={o:mixW(KC.o,.35),oL:mixW(KC.oL,.35),y:mixW(KC.y,.35),g1:mixW(KC.g1,.35),
+  g3:mixW(KC.g3,.4),pk:mixW(KC.pk,.42),bl:mixW(KC.bl,.42),shiro:KC.shiro,sumi:mixW(KC.sumi,.42)};
+/* 品種定義: 白地6+墨地6+三色 */
+const VARIETIES={
+ 'shiro-dai':{base:KP.shiro,pat:[KP.o,KP.oL],style:'kohaku'},
+ 'shiro-ki':{base:KP.shiro,pat:[KP.y],style:'kohaku'},
+ 'shiro-waka':{base:KP.shiro,pat:[KP.g1],style:'kohaku'},
+ 'shiro-midori':{base:KP.shiro,pat:[KP.g3],style:'kohaku'},
+ 'shiro-momo':{base:KP.shiro,pat:[KP.pk],style:'kohaku'},
+ 'shiro-ai':{base:KP.shiro,pat:[KP.bl],style:'kohaku'},
+ 'sumi-dai':{base:KP.sumi,pat:[KP.o],style:'utsuri'},
+ 'sumi-ki':{base:KP.sumi,pat:[KP.y],style:'utsuri'},
+ 'sumi-waka':{base:KP.sumi,pat:[KP.g1],style:'utsuri'},
+ 'sumi-midori':{base:KP.sumi,pat:[KP.g3],style:'utsuri'},
+ 'sumi-momo':{base:KP.sumi,pat:[KP.pk],style:'utsuri'},
+ 'sumi-ai':{base:KP.sumi,pat:[KP.bl],style:'utsuri'},
+ 'sanshoku':{base:KP.shiro,pat:[KP.o,KP.oL],style:'sanshoku'}
+};
+function rgba(hex,a){const n=parseInt(hex.slice(1),16);
+  return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;}
+function mulberry(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;
+  let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;
+  return((t^t>>>14)>>>0)/4294967296;}}
+const angDiff=(a,b)=>{let d=(a-b)%(Math.PI*2);if(d>Math.PI)d-=Math.PI*2;if(d<-Math.PI)d+=Math.PI*2;return d;};
+const PROFILE=[0.58,0.84,0.97,1.0,0.97,0.92,0.85,0.75,0.62,0.47,0.33,0.22,0.13]; // 頭は丸い楔形(実物の上面視: エラのあたりが最幅)
+const NSEG=PROFILE.length;
+let koiSeed=7;
+
+class Koi{
+ constructor(vKey,edge){
+  this.vKey=vKey;this.v=VARIETIES[vKey];
+  const R=this.R=mulberry(koiSeed++*2654435761);
+  this.scale=.8+R()*.34;                    // 深さ(小=深い)
+  this.len=(180+R()*46)*this.scale;         // 全長150〜250px
+  this.W=this.len*.117;                     // 最大半幅
+  this.spineLen=this.len*.74;this.sp=this.spineLen/(NSEG-1);
+  this.baseSpeed=26+R()*18;
+  this.wf1=.08+R()*.1;this.wp1=R()*7;this.wa1=.28+R()*.2;
+  this.wf2=.21+R()*.16;this.wp2=R()*7;this.wa2=.16+R()*.14;
+  this.sf=.14+R()*.12;this.sph=R()*7;
+  this.phase=R()*7;this.angV=0;this.turnCool=0;
+  this.swimT=.6+R();this.gulpT=5+R()*9;this.gulp=0;
+  this.state=edge?'rise':'live';this.alpha=edge?0:1;
+  if(edge){ // 縁のすぐ外から泳ぎ入る(鼻先が縁に触れる位置)
+    const e=Math.floor(R()*4),m=this.len*.3;
+    if(e===0){this.x=-m;this.y=160+R()*760;this.heading=(R()-.5)*.8;}
+    else if(e===1){this.x=1920+m;this.y=160+R()*760;this.heading=Math.PI+(R()-.5)*.8;}
+    else if(e===2){this.x=200+R()*1520;this.y=-m;this.heading=Math.PI/2+(R()-.5)*.8;}
+    else{this.x=200+R()*1520;this.y=1080+m;this.heading=-Math.PI/2+(R()-.5)*.8;}
+  }else{this.x=240+R()*1440;this.y=200+R()*680;this.heading=R()*Math.PI*2;}
+  this.segs=[];for(let i=0;i<NSEG;i++)this.segs.push({
+    x:this.x-Math.cos(this.heading)*this.sp*i,y:this.y-Math.sin(this.heading)*this.sp*i});
+  this.patches=this.genPatches(R);
+ }
+ genPatches(R){ // 斑を「背骨座標系」で事前確定(毎フレーム同形)。実物に倣い、大きく連続した一枚の斑(緋盤)として生成する
+  const P=[],st=this.v.style,cols=this.v.pat;
+  const patch=(t0,t1,col,rf=1,wander=.4)=>{ // 大円をゆっくり蛇行させながら重ね、ひと繋がりの斑にする
+    const k=Math.max(3,Math.round((t1-t0)*26));
+    let off=(R()-.5)*wander;
+    for(let s=0;s<=k;s++){const u=s/k,t=t0+(t1-t0)*u;
+      const e=Math.sin(Math.PI*u);                 // 端は自然にすぼむ(段の切れ)
+      off=off*.9+(R()-.5)*.17;
+      P.push({t,off,r:rf*(.62+.55*e)*(.93+R()*.14),col});}
+  };
+  if(st==='kohaku'){ // 紅白: 頭の紅+背を渡る二〜三段の緋盤。白は段の間に残す
+    if(R()<.14)patch(.045,.115,cols[0],.72,.12);   // 丹頂
+    else patch(.03,.15,cols[0],.85,.18);           // 頭部の紅(鼻先までは下りない)
+    patch(.21+R()*.05,.47+R()*.07,cols[R()*cols.length|0],1.05);
+    if(R()<.85)patch(.58+R()*.05,.8+R()*.05,cols[0],.9,.45);
+  }else if(st==='utsuri'){ // 写り: 墨地に大柄が巻く — 地色が段の間にしっかり残ること
+    patch(.04,.13,cols[0],.78,.3);
+    patch(.32+R()*.06,.52+R()*.06,cols[0],.9);
+    if(R()<.75)patch(.68,.82,cols[0],.72);
+  }else{ // 三色: 紅白に倣う緋盤+肩〜胴に少数の小さな墨点
+    patch(.04,.13,cols[0],.78,.2);
+    patch(.24+R()*.05,.45+R()*.06,cols[0],.95);
+    if(R()<.8)patch(.6,.75,cols[0],.8);
+    const nS=2+(R()*2|0);
+    for(let i=0;i<nS;i++){const t=.2+R()*.45;patch(t,t+.035+R()*.03,KP.sumi,.28,.9);}
+  }
+  return P;
+ }
+ spineAt(t){const f=t*(NSEG-1),i=Math.min(NSEG-2,f|0),u=f-i;
+  const a=this.dp[i],b=this.dp[i+1];
+  return{x:a.x+(b.x-a.x)*u,y:a.y+(b.y-a.y)*u,
+    nx:a.nx+(b.nx-a.nx)*u,ny:a.ny+(b.ny-a.ny)*u,
+    w:this.W*(PROFILE[i]+(PROFILE[Math.min(NSEG-1,i+1)]-PROFILE[i])*u)};}
+ update(dt,t,mgr){
+  let turn=Math.sin(t*this.wf1*6.28+this.wp1)*this.wa1
+          +Math.sin(t*this.wf2*6.28+this.wp2)*this.wa2;
+  const M=170,cx=960,cy=540; // 縁で中央へ舵
+  const pE=Math.max(0,Math.max(M-this.x,this.x-(1920-M),M-this.y,this.y-(1080-M)))/M;
+  if(pE>0&&this.state!=='dive')turn+=angDiff(Math.atan2(cy-this.y,cx-this.x),this.heading)*(1.8*Math.min(1,pE));
+  for(const o of mgr.list){if(o===this||o.alpha<.3)continue; // ゆるい分離
+    const dx=this.x-o.x,dy=this.y-o.y,d=Math.hypot(dx,dy),s=130*this.scale;
+    if(d<s&&d>1)turn+=angDiff(Math.atan2(dy,dx),this.heading)*.7*(1-d/s);}
+  if(mgr.feed&&t<mgr.feed.until){ // 餌に寄る
+    const d=Math.hypot(mgr.feed.x-this.x,mgr.feed.y-this.y);
+    if(d>70)turn+=angDiff(Math.atan2(mgr.feed.y-this.y,mgr.feed.x-this.x),this.heading)*1.5;}
+  turn=Math.max(-1.5,Math.min(1.5,turn));
+  this.heading+=turn*dt;
+  this.angV+=(Math.abs(turn)-this.angV)*Math.min(1,dt*4);
+  this.turnCool-=dt;
+  if(this.angV>.95&&this.turnCool<=0&&this.alpha>.6){ // 旋回波紋
+    mgr.ripple(this.segs[3].x,this.segs[3].y,{maxR:80*this.scale,a0:.17,lw:1.8});this.turnCool=1.4;}
+  let sp=this.baseSpeed*(.85+.3*Math.sin(t*this.sf*6.28+this.sph));
+  if(this.state==='rise')sp*=3.0; // 入場中はすっと泳ぎ入る
+  if(this.gulp>0){this.gulp-=dt;sp*=.12;} // 口上げ中は静止
+  this.phase+=dt*(1.5+sp/48)*2.5;
+  const hh=this.heading+Math.sin(this.phase)*.11;
+  this.x+=Math.cos(hh)*sp*dt;this.y+=Math.sin(hh)*sp*dt;
+  this.segs[0].x=this.x;this.segs[0].y=this.y;
+  for(let i=1;i<NSEG;i++){ // 追従チェーン
+    const p=this.segs[i-1],s=this.segs[i];
+    let dx=s.x-p.x,dy=s.y-p.y;const d=Math.hypot(dx,dy)||1;
+    s.x=p.x+dx/d*this.sp;s.y=p.y+dy/d*this.sp;}
+  this.swimT-=dt; // 泳跡波紋
+  if(this.swimT<=0&&this.alpha>.5){this.swimT=1+this.R()*1.1;
+    mgr.ripple(this.x,this.y,{maxR:(38+this.R()*16)*this.scale,a0:.13,lw:1.3});}
+  this.gulpT-=dt; // 口上げ(パクッ): 三重の輪
+  if(this.gulpT<=0&&this.alpha>.8&&pE===0){this.gulpT=8+this.R()*9;this.gulp=.8;
+    for(let k=0;k<3;k++)mgr.ripple(this.x,this.y,{delay:k*.24,maxR:(112-k*26)*this.scale,a0:.2,lw:2-k*.4});}
+  if(this.state==='rise'){this.alpha=Math.min(1,this.alpha+dt/1.7);if(this.alpha>=1)this.state='live';}
+  if(this.state==='dive'){this.alpha-=dt/2.4;}
+ }
+ draw(x){
+  // 描画用背骨: チェーン+尾側ほど強い進行波オフセット
+  this.dp=[];
+  for(let i=0;i<NSEG;i++){
+    const a=this.segs[Math.max(0,i-1)],b=this.segs[Math.min(NSEG-1,i+1)];
+    let dx=b.x-a.x,dy=b.y-a.y;const m=Math.hypot(dx,dy)||1;dx/=m;dy/=m;
+    const off=Math.sin(this.phase-i*.6)*(1.6+this.len*.011)*Math.pow(i/(NSEG-1),1.35);
+    this.dp.push({x:this.segs[i].x-dy*off,y:this.segs[i].y+dx*off,nx:-dy,ny:dx});
+  }
+  // 法線を描画点から再計算
+  for(let i=0;i<NSEG;i++){
+    const a=this.dp[Math.max(0,i-1)],b=this.dp[Math.min(NSEG-1,i+1)];
+    let dx=b.x-a.x,dy=b.y-a.y;const m=Math.hypot(dx,dy)||1;
+    this.dp[i].nx=-dy/m;this.dp[i].ny=dx/m;
+    if(i===0){this.fwd={x:-dx/m,y:-dy/m};}
+    if(i===NSEG-1){this.bwd={x:dx/m,y:dy/m};}
+  }
+  const P=this.dp,WS=PROFILE.map(p=>p*this.W);
+  const body=new Path2D();
+  const nose={x:P[0].x+this.fwd.x*WS[0]*.9,y:P[0].y+this.fwd.y*WS[0]*.9}; // 鼻先は短く丸く(尖らせない)
+  const tail={x:P[NSEG-1].x+this.bwd.x*WS[NSEG-1]*1.6,y:P[NSEG-1].y+this.bwd.y*WS[NSEG-1]*1.6};
+  const L=P.map((p,i)=>({x:p.x+p.nx*WS[i],y:p.y+p.ny*WS[i]}));
+  const Rr=P.map((p,i)=>({x:p.x-p.nx*WS[i],y:p.y-p.ny*WS[i]}));
+  body.moveTo(nose.x,nose.y);
+  body.quadraticCurveTo(L[0].x,L[0].y,(L[0].x+L[1].x)/2,(L[0].y+L[1].y)/2);
+  for(let i=1;i<NSEG-1;i++)body.quadraticCurveTo(L[i].x,L[i].y,(L[i].x+L[i+1].x)/2,(L[i].y+L[i+1].y)/2);
+  body.quadraticCurveTo(L[NSEG-1].x,L[NSEG-1].y,tail.x,tail.y);
+  body.quadraticCurveTo(Rr[NSEG-1].x,Rr[NSEG-1].y,(Rr[NSEG-1].x+Rr[NSEG-2].x)/2,(Rr[NSEG-1].y+Rr[NSEG-2].y)/2);
+  for(let i=NSEG-2;i>0;i--)body.quadraticCurveTo(Rr[i].x,Rr[i].y,(Rr[i].x+Rr[i-1].x)/2,(Rr[i].y+Rr[i-1].y)/2);
+  body.quadraticCurveTo(Rr[0].x,Rr[0].y,nose.x,nose.y);
+  body.closePath();
+  const depthA=.72+.28*Math.min(1,(this.scale-.8)/.34);
+  x.save();x.globalAlpha=this.alpha*depthA;
+  // 影(池底に落ちる)
+  const sh=this.len*.055;
+  x.save();x.translate(sh,sh*1.5);x.fillStyle='rgba(43,63,64,.07)';x.fill(body);
+  x.translate(2.5,3.5);x.fillStyle='rgba(43,63,64,.04)';x.fill(body);x.restore();
+  // 尾びれ(二葉の扇・半透明)
+  const ped=P[NSEG-1],sway=Math.sin(this.phase-2.3)*.3;
+  const tA=Math.atan2(this.bwd.y,this.bwd.x)+sway,TL=this.len*.34; // 尾は大きめの扇
+  const rot=(a,r)=>({x:Math.cos(a+r),y:Math.sin(a+r)});
+  const t1=rot(tA,.56),t2=rot(tA,-.56),td=rot(tA,0);
+  const tp1={x:ped.x+t1.x*TL,y:ped.y+t1.y*TL},tp2={x:ped.x+t2.x*TL,y:ped.y+t2.y*TL};
+  const ntc={x:ped.x+td.x*TL*.74,y:ped.y+td.y*TL*.74}; // 切れ込みは浅く(実物はハート型には割れない)
+  const c1=rot(tA,1.05),c2=rot(tA,-1.05);
+  const fin=new Path2D();
+  fin.moveTo(ped.x+P[NSEG-1].nx*2,ped.y+P[NSEG-1].ny*2);
+  fin.quadraticCurveTo(ped.x+c1.x*TL*.45,ped.y+c1.y*TL*.45,tp1.x,tp1.y);
+  fin.quadraticCurveTo(ped.x+td.x*TL*.88+t1.x*TL*.1,ped.y+td.y*TL*.88+t1.y*TL*.1,ntc.x,ntc.y);
+  fin.quadraticCurveTo(ped.x+td.x*TL*.88+t2.x*TL*.1,ped.y+td.y*TL*.88+t2.y*TL*.1,tp2.x,tp2.y);
+  fin.quadraticCurveTo(ped.x+c2.x*TL*.45,ped.y+c2.y*TL*.45,ped.x-P[NSEG-1].nx*2,ped.y-P[NSEG-1].ny*2);
+  fin.closePath();
+  x.fillStyle=rgba(this.v.base,.48);x.fill(fin);
+  x.fillStyle=rgba(this.v.pat[0],.14);x.fill(fin);
+  x.strokeStyle=this.v.base===KP.sumi?'rgba(255,255,255,.16)':'rgba(70,84,78,.14)';
+  x.lineWidth=1;x.stroke(fin);
+  for(const q of[-.3,0,.3]){ // 鰭条(すじ)
+    const rq=rot(tA,q);
+    x.beginPath();x.moveTo(ped.x,ped.y);
+    x.quadraticCurveTo(ped.x+td.x*TL*.5+rq.x*TL*.1,ped.y+td.y*TL*.5+rq.y*TL*.1,
+      ped.x+rq.x*TL*.88,ped.y+rq.y*TL*.88);
+    x.strokeStyle=this.v.base===KP.sumi?'rgba(255,255,255,.1)':'rgba(70,84,78,.09)';
+    x.lineWidth=.9;x.stroke();}
+  // 胴+斑(クリップ)
+  x.fillStyle=this.v.base;x.fill(body);
+  x.save();x.clip(body);
+  x.globalAlpha=this.alpha*this.alpha*depthA; // 斑は胴より先に沈む(消え際に斑だけ浮かない)
+  for(const p of this.patches){const s=this.spineAt(p.t);
+    x.beginPath();x.arc(s.x+s.nx*s.w*p.off,s.y+s.ny*s.w*p.off,Math.max(1,s.w*p.r),0,6.284);
+    x.fillStyle=p.col;x.fill();}
+  x.globalAlpha=this.alpha*depthA;
+  x.strokeStyle='rgba(38,52,50,.06)';x.lineWidth=this.W*.6;x.stroke(body); // 縁の丸み
+  x.restore();
+  x.strokeStyle=this.v.base===KP.sumi?'rgba(30,36,40,.2)':'rgba(70,84,78,.18)';
+  x.lineWidth=1.2;x.stroke(body);
+  // 胸びれ(扇形・ぱたぱた) — 胴の後に描き、エラの脇から胴の縁に重ねてひろげる(上面視では胴の上に見える)
+  const fA0=Math.atan2(-this.fwd.y,-this.fwd.x); // 後ろ向き
+  const finEdge=this.v.base===KP.sumi?'rgba(255,255,255,.28)':'rgba(70,84,78,.22)';
+  const finRay=this.v.base===KP.sumi?'rgba(255,255,255,.14)':'rgba(70,84,78,.11)';
+  for(const side of[-1,1]){
+    const bx=P[2].x+P[2].nx*WS[2]*.92*side,by=P[2].y+P[2].ny*WS[2]*.92*side;
+    const fa=fA0+side*(1.1+Math.sin(this.phase+side*1.57)*.16); // 自分の側へ外向き・後ろ流れ(胴に被せない)
+    const fl=this.len*.15,fw=fl*.4; // 実物は体長の1〜1.5割。根元が細く中ほどで最幅・先が丸い花びら型のパドル
+    x.save();x.translate(bx,by);x.rotate(fa);
+    const fan=new Path2D();
+    fan.moveTo(0,0);
+    fan.bezierCurveTo(fl*.3,-fw*.9,fl*.78,-fw*.95,fl,-fw*.3);
+    fan.quadraticCurveTo(fl*1.07,0,fl,fw*.3); // 丸い先端
+    fan.bezierCurveTo(fl*.78,fw*.95,fl*.3,fw*.9,0,0);
+    fan.closePath();
+    x.fillStyle=rgba(this.v.base,.62);x.fill(fan);
+    x.fillStyle=rgba(this.v.pat[0],.1);x.fill(fan);
+    x.strokeStyle=finEdge;x.lineWidth=1;x.stroke(fan);
+    for(const q of[-1,0,1]){ // 鰭条(すじ) — 花びらに沿ってゆるく湾曲
+      x.beginPath();x.moveTo(0,0);
+      x.quadraticCurveTo(fl*.45,q*fw*.55,fl*.85,q*fw*.42);
+      x.strokeStyle=finRay;x.lineWidth=.8;x.stroke();}
+    x.restore();
+  }
+  // 背びれ — 背の中心線(後半)に沿う薄い稜線。白の半透明で、斑を横切るときだけふわりと見える
+  x.save();x.lineCap='round';
+  x.beginPath();x.moveTo(P[7].x,P[7].y);
+  for(let i=8;i<NSEG;i++)x.lineTo(P[i].x,P[i].y);
+  x.strokeStyle='rgba(255,255,255,.22)';x.lineWidth=this.W*.17;x.stroke();
+  x.strokeStyle='rgba(70,84,78,.07)';x.lineWidth=this.W*.06;x.stroke();
+  x.restore();
+  // 目 — 頭の側面・最幅のすぐ手前に小さく
+  for(const side of[-1,1]){
+    x.beginPath();x.arc(P[1].x+this.fwd.x*this.sp*.3+P[1].nx*WS[1]*.72*side,
+      P[1].y+this.fwd.y*this.sp*.3+P[1].ny*WS[1]*.72*side,
+      Math.max(1.4,this.len*.011),0,6.284);
+    x.fillStyle='rgba(34,40,43,.55)';x.fill();}
+  x.restore();
+ }
+}
+
+/* ===== 池マネージャ ===== */
+const koiMgr={list:[],ripples:[],feed:null,T:0,
+ ripple(x,y,o){if(this.ripples.length>70)this.ripples.shift();
+  this.ripples.push({x,y,age:0,delay:o.delay||0,dur:o.dur||2.6,
+    maxR:o.maxR||60,a0:o.a0||.15,lw:o.lw||1.5});},
+ setRoster(vs,count,inside){
+  const need={};vs.forEach((v,i)=>need[v]=Math.floor(count/vs.length)+(i<count%vs.length?1:0));
+  const keep=[];
+  for(const k of this.list){ // 続投できる鯉は残す
+    if(k.state!=='dive'&&need[k.vKey]>0){need[k.vKey]--;keep.push(k);}
+    else if(k.state==='dive'){keep.push(k);}
+    else{k.state='dive';keep.push(k);}
+  }
+  this.list=keep;
+  for(const v of vs)for(let i=0;i<need[v];i++)this.list.push(new Koi(v,!inside));
+ },
+ feedAt(x,y){this.feed={x,y,until:this.T+1.9};
+  this.ripple(x,y,{maxR:150,a0:.2,lw:2.2,dur:3});
+  this.ripple(x,y,{delay:.2,maxR:100,a0:.15,lw:1.6,dur:2.6});},
+ step(dt){this.T+=dt;
+  for(const k of this.list)k.update(dt,this.T,this);
+  this.list=this.list.filter(k=>!(k.state==='dive'&&k.alpha<=0));
+  for(const r of this.ripples){if(r.delay>0){r.delay-=dt;continue;}r.age+=dt;}
+  this.ripples=this.ripples.filter(r=>r.age<r.dur);
+ },
+ render(){kx.clearRect(0,0,1920,1080);
+  const order=[...this.list].sort((a,b)=>a.scale-b.scale);
+  for(const k of order)k.draw(kx);
+  kx.fillStyle=veilGrad;kx.fillRect(0,0,1920,1080); // 薄衣(水のヴェール)
+  for(const r of this.ripples){if(r.delay>0)continue;
+    const p=r.age/r.dur,rad=r.maxR*(1-Math.pow(1-p,2.2)),a=r.a0*Math.pow(1-p,1.6);
+    kx.beginPath();kx.arc(r.x,r.y,rad,0,6.284);
+    kx.strokeStyle=`rgba(96,132,140,${a})`;kx.lineWidth=r.lw*(1-p*.45);kx.stroke();
+    kx.beginPath();kx.arc(r.x,r.y,rad*1.05+1.5,0,6.284);
+    kx.strokeStyle=`rgba(255,255,255,${a*.85})`;kx.lineWidth=r.lw*.8*(1-p*.45);kx.stroke();
+  }
+ }
+};
+const veilGrad=(()=>{const g=kx.createLinearGradient(0,0,0,1080);
+  g.addColorStop(0,'rgba(247,252,250,.32)');g.addColorStop(1,'rgba(238,246,242,.46)');return g;})(); // 薄衣は強めに — 鯉は背景、本文が主役
+
+/* ページ→池の対応表(data-koi。無指定は前ページを継承) */
+const PAGE_KOI=[];let lastR={vs:['shiro-dai'],n:3};
+slides.forEach(s=>{
+  const dk=s.dataset.koi;
+  if(dk){const vs=dk.split(',').map(v=>v.trim()).filter(v=>VARIETIES[v]);
+    if(vs.length){const n=+s.dataset.koiCount||Math.min(6,vs.length+2);lastR={vs,n};}}
+  PAGE_KOI.push({vs:lastR.vs,n:lastR.n});
+});
+function koiSet(i,inside){const r=PAGE_KOI[i];koiMgr.setRoster(r.vs,Math.min(7,r.n),inside);}
+koiSet(0,true); // 初期ページは池の中から始まる
+let lastT=performance.now();
+let koiActive=true;
+function koiLoop(now){
+  const dt=Math.min(.05,(now-lastT)/1000);lastT=now;
+  if(koiActive){koiMgr.step(dt);koiMgr.render();}
+  if(!REDUCED)requestAnimationFrame(koiLoop);
+}
+if(REDUCED){koiMgr.step(.016);koiMgr.render();}
+else requestAnimationFrame(koiLoop);
+
 /* ===== ページ遷移 ===== */
 function go(n){
   cur=Math.max(0,Math.min(total-1,n));
@@ -1017,6 +1355,12 @@ function go(n){
     s.classList.toggle('back',i<cur);
     if(i!==cur){s.classList.remove('in');s.querySelectorAll('.step.on').forEach(e=>e.classList.remove('on'));}});
   requestAnimationFrame(()=>requestAnimationFrame(()=>slides[cur].classList.add('in')));
+
+  /* NISHIKI: 表紙のみ池を見せる(離脱時はフェード完了後に描画停止) */
+  koiSet(cur);
+  clearTimeout(window._koiT);
+  if(cur===0){koiActive=true;stage.classList.remove('koi-off');}
+  else{stage.classList.add('koi-off');window._koiT=setTimeout(()=>koiActive=false,1300);}
 
   /* --- 時間差演出のタイマー管理フック(effects.mdの各演出はここに足す) --- */
   // clearTimeout(window._fxT); ...
@@ -1050,7 +1394,9 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(cur-1)}
   if(e.key==='Home')go(0);if(e.key==='End')go(total-1);});
 stage.addEventListener('click',e=>{
-  if(e.target.closest('button,.dot,a'))return;nextAction();});
+  if(e.target.closest('button,.dot,a'))return;
+  if(cur===0){const r=stage.getBoundingClientRect();koiMgr.feedAt((e.clientX-r.left)/fitScale,(e.clientY-r.top)/fitScale);}
+  nextAction();});
 let tx=null;
 stage.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
 stage.addEventListener('touchend',e=>{
