@@ -185,26 +185,26 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 .clawd{position:absolute;z-index:1;pointer-events:none}
 .clawd .blink{animation:clblink 4.2s steps(1) infinite}
 @keyframes clblink{0%,88%{opacity:1}89%,100%{opacity:0}}
-.cl-body{position:absolute;right:0;bottom:0;animation:clplay 6s steps(1) infinite}
+.cl-body{position:absolute;right:0;bottom:0;animation:clplay 4s steps(1) infinite}
 @keyframes clplay{
   0%,6%{transform:translate(0,0)}
   7%,12%{transform:translate(-7px,0)}
-  13%,42%{transform:translate(0,0)}
-  43%,50%{transform:translate(0,-10px)}
-  51%,100%{transform:translate(0,0)}
+  13%,35%{transform:translate(0,0)}
+  36%,43%{transform:translate(0,-10px)}
+  44%,100%{transform:translate(0,0)}
 }
-.cl-ball{position:absolute;left:118px;bottom:0;animation:ballplay 6s infinite}
+.cl-ball{position:absolute;left:118px;bottom:0;animation:ballplay 4s infinite}
 @keyframes ballplay{
   0%,8%{transform:translate(0,0);animation-timing-function:steps(8)}
-  30%{transform:translate(95px,-146px);animation-timing-function:steps(4)}
-  42%{transform:translate(128px,-98px);animation-timing-function:steps(4)}
-  52%{transform:translate(140px,-152px);animation-timing-function:steps(7)}
-  70%{transform:translate(80px,-70px);animation-timing-function:steps(6)}
-  85%,100%{transform:translate(0,0)}
+  26%{transform:translate(95px,-146px);animation-timing-function:steps(4)}
+  36%{transform:translate(128px,-98px);animation-timing-function:steps(4)}
+  46%{transform:translate(140px,-152px);animation-timing-function:steps(7)}
+  60%{transform:translate(80px,-70px);animation-timing-function:steps(6)}
+  72%,100%{transform:translate(0,0)}
 }
 .cl-legB{opacity:0}
-.clawd .cl-legA{animation:cl-lA 6s steps(1) infinite}
-.clawd .cl-legB{animation:cl-lB 6s steps(1) infinite}
+.clawd .cl-legA{animation:cl-lA 4s steps(1) infinite}
+.clawd .cl-legB{animation:cl-lB 4s steps(1) infinite}
 @keyframes cl-lA{0%,6%{opacity:1}7%,12%{opacity:0}13%,100%{opacity:1}}
 @keyframes cl-lB{0%,6%{opacity:0}7%,12%{opacity:1}13%,100%{opacity:0}}
 
