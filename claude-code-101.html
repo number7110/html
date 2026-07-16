@@ -159,6 +159,10 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 .slide.in .rd.rb{opacity:.16}
 @keyframes rfall{from{transform:translate(0,0)}to{transform:translate(-60px,1260px)}}
 .pxcloud{position:absolute;z-index:1;pointer-events:none}
+/* 猫: 2コマ歩行で右から左へ横断 */
+.pxcat{position:absolute;z-index:1;pointer-events:none;opacity:0}
+.slide.in .pxcat{opacity:1;animation:catwalk 22s steps(88) infinite}
+@keyframes catwalk{from{transform:translate(0,0)}to{transform:translate(-2320px,0)}}
 
 
 .nav{position:absolute;bottom:0;left:0;right:0;height:62px;display:flex;align-items:center;
@@ -182,7 +186,7 @@ html,body{height:100%;overflow:hidden;background:#11160f;
   .dpatch{opacity:1}
   .pxbranch rect{opacity:1}
   .pb,.pf{display:none}
-  .pxfly,.rd,.birdfly{display:none}
+  .pxfly,.rd,.birdfly,.pxcat{display:none}
   .birdsit{opacity:1}
 }
 </style>
@@ -309,6 +313,27 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 <!-- ===== 2. 進め方 ===== -->
 <section class="slide fB">
   <div class="dpatch" style="right:-90px;top:-80px;width:460px;height:360px;--c:rgba(250,179,80,.36);--d:.2s"></div>
+  <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">How to use</div>
+  <h2 class="bloom" style="--d:.22s;font-size:58px;line-height:1.35;position:relative;z-index:2">この30分の<span class="pxmark" style="--d:.9s">進め方</span></h2>
+  <div class="duo" style="margin-top:44px">
+    <div class="wcard bloom" style="--d:.45s;--wc:rgba(149,201,113,.45)">
+      <div class="p-tag">要点だけ</div>
+      <p>この資料にあるのは「やること」と「コピペ用プロンプト」だけ。詳しい説明は載っていない。</p>
+    </div>
+    <div class="wcard step" data-step="1" style="--wc:rgba(250,179,80,.42)">
+      <div class="p-tag" style="color:var(--o2)">わからないことは、ぜんぶチャットに聞く</div>
+      <p><b>手順を覚える必要はない</b>。迷ったら聞く、エラーが出たら画面をキャプチャして貼って聞く。これが今日の基本動作。</p>
+    </div>
+    <div class="wcard step" data-step="2" style="--wc:rgba(244,199,79,.45)">
+      <div class="p-tag" style="color:#b98f1d">事前準備はひとつ</div>
+      <p><b>Claude Pro 以上</b>のプランに登録しておく(Claude Code の利用に必要)。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3. なぜCodeが近道か ===== -->
+<section class="slide fB">
+  <div class="dpatch" style="left:-90px;bottom:-100px;width:440px;height:340px;--c:rgba(149,201,113,.35);--d:.25s"></div>
   <!-- ドットの蝶(2コマ羽ばたきで横断) -->
   <div class="pxfly" style="left:-140px;top:210px">
     <svg width="104" height="80" viewBox="0 0 13 10" shape-rendering="crispEdges">
@@ -332,27 +357,6 @@ html,body{height:100%;overflow:hidden;background:#11160f;
       </g>
     </svg>
   </div>
-  <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">How to use</div>
-  <h2 class="bloom" style="--d:.22s;font-size:58px;line-height:1.35;position:relative;z-index:2">この30分の<span class="pxmark" style="--d:.9s">進め方</span></h2>
-  <div class="duo" style="margin-top:44px">
-    <div class="wcard bloom" style="--d:.45s;--wc:rgba(149,201,113,.45)">
-      <div class="p-tag">要点だけ</div>
-      <p>この資料にあるのは「やること」と「コピペ用プロンプト」だけ。詳しい説明は載っていない。</p>
-    </div>
-    <div class="wcard step" data-step="1" style="--wc:rgba(250,179,80,.42)">
-      <div class="p-tag" style="color:var(--o2)">わからないことは、ぜんぶチャットに聞く</div>
-      <p><b>手順を覚える必要はない</b>。迷ったら聞く、エラーが出たら画面をキャプチャして貼って聞く。これが今日の基本動作。</p>
-    </div>
-    <div class="wcard step" data-step="2" style="--wc:rgba(244,199,79,.45)">
-      <div class="p-tag" style="color:#b98f1d">事前準備はひとつ</div>
-      <p><b>Claude Pro 以上</b>のプランに登録しておく(Claude Code の利用に必要)。</p>
-    </div>
-  </div>
-</section>
-
-<!-- ===== 3. なぜCodeが近道か ===== -->
-<section class="slide fB">
-  <div class="dpatch" style="left:-90px;bottom:-100px;width:440px;height:340px;--c:rgba(149,201,113,.35);--d:.25s"></div>
   <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">Why Claude Code</div>
   <h2 class="bloom" style="--d:.22s;font-size:58px;line-height:1.35;position:relative;z-index:2">なぜ「Codeを触る」のが<span class="pxmark" style="--d:.9s">近道</span>か</h2>
   <div class="duo" style="margin-top:44px">
@@ -481,6 +485,37 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 <!-- ===== 7. STEP2 ===== -->
 <section class="slide fB">
   <div class="dpatch" style="left:-90px;bottom:-100px;width:420px;height:330px;--c:rgba(149,201,113,.35);--d:.25s"></div>
+  <!-- ドットの猫(2コマ歩行で右から左へ) -->
+  <div class="pxcat" style="right:-160px;bottom:118px">
+    <svg width="126" height="90" viewBox="0 0 14 10" shape-rendering="crispEdges">
+      <rect x="1" y="0" width="1" height="1" fill="#F18B00"/><rect x="4" y="0" width="1" height="1" fill="#F18B00"/>
+      <rect x="1" y="1" width="4" height="1" fill="#FAB350"/>
+      <rect x="0" y="2" width="5" height="1" fill="#FAB350"/>
+      <rect x="1" y="3" width="4" height="1" fill="#FAB350"/>
+      <rect x="1" y="2" width="1" height="1" fill="#3d4540"/>
+      <rect x="0" y="2" width="1" height="1" fill="#d2356f"/>
+      <rect x="5" y="3" width="7" height="1" fill="#FAB350"/>
+      <rect x="4" y="4" width="8" height="1" fill="#FAB350"/>
+      <rect x="4" y="5" width="7" height="1" fill="#FAB350"/>
+      <rect x="6" y="3" width="1" height="2" fill="#F18B00"/>
+      <rect x="9" y="3" width="1" height="2" fill="#F18B00"/>
+      <rect x="4" y="4" width="1" height="1" fill="#ffffff"/>
+      <rect x="12" y="3" width="1" height="1" fill="#F18B00"/>
+      <rect x="12" y="2" width="1" height="1" fill="#F18B00"/>
+      <rect x="13" y="1" width="1" height="1" fill="#F18B00"/>
+      <g class="fwA">
+        <rect x="4" y="6" width="1" height="2" fill="#FAB350"/>
+        <rect x="10" y="6" width="1" height="2" fill="#FAB350"/>
+        <rect x="6" y="6" width="1" height="1" fill="#F18B00"/>
+        <rect x="8" y="6" width="1" height="1" fill="#F18B00"/>
+      </g>
+      <g class="fwB">
+        <rect x="5" y="6" width="1" height="2" fill="#FAB350"/>
+        <rect x="9" y="6" width="1" height="2" fill="#FAB350"/>
+        <rect x="7" y="6" width="1" height="1" fill="#F18B00"/>
+      </g>
+    </svg>
+  </div>
   <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">Step 2</div>
   <h2 class="bloom" style="--d:.22s;font-size:56px;line-height:1.35;position:relative;z-index:2"><span class="pxmark" style="--d:.9s">ターミナル</span>を開く</h2>
   <p class="bloom" style="--d:.4s;font-size:21px;line-height:1.95;margin-top:20px;position:relative;z-index:2">ターミナルは、コンピュータに<b>文字で指示を出す画面</b>。今日打つのはごく少数。</p>
@@ -579,8 +614,8 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 <!-- ===== 10. STEP4 プロンプト ===== -->
 <section class="slide fB">
   <div class="dpatch" style="right:-90px;bottom:-100px;width:430px;height:330px;--c:rgba(149,201,113,.35);--d:.25s"></div>
-  <!-- ドットの虹(雨上がりの弧・セル連打で左から架かる) -->
-  <div style="position:absolute;right:110px;top:44px;width:680px;height:340px;z-index:1;pointer-events:none">
+  <!-- ドットの虹(雨上がりの弧・セル連打で左から架かる・淡め) -->
+  <div style="position:absolute;right:110px;bottom:104px;width:680px;height:340px;z-index:1;pointer-events:none;opacity:.45">
     <svg class="pxbranch" width="680" height="340" viewBox="0 0 44 22" shape-rendering="crispEdges">
       <rect x="1" y="21" width="1" height="1" fill="#F18B00" style="--pd:0.15s"/>
       <rect x="2" y="21" width="1" height="1" fill="#F4C74F" style="--pd:0.15s"/>
