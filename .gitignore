@@ -1,4 +1,5 @@
 .vercel/
+.vercel
 .DS_Store
 *.pem
-.vercel
+node_modules/
