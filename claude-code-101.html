@@ -173,12 +173,40 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 .slide.in .csit{animation:catseq-s 36s steps(1) infinite}
 @keyframes catseq-w{0%,26%{opacity:1}27%,40%{opacity:0}41%,100%{opacity:1}}
 @keyframes catseq-s{0%,26%{opacity:0}27%,40%{opacity:1}41%,100%{opacity:0}}
-/* Clawd(Claude Codeのキャラ): ポップ登場+2コマの跳ね+まばたき */
+/* 猫(左から版): 歩いてきて途中で座り、そのまま居着く */
+.pxcat.rev .cwalk svg,.pxcat.rev .csit svg{transform:scaleX(-1)}
+.slide.in .pxcat.rev{opacity:1;animation:catwalk-in 11.5s steps(33) forwards}
+@keyframes catwalk-in{from{transform:translate(0,0)}to{transform:translate(860px,0)}}
+.slide.in .pxcat.rev .cwalk{animation:catseq-w2 11.5s steps(1) forwards}
+.slide.in .pxcat.rev .csit{animation:catseq-s2 11.5s steps(1) forwards}
+@keyframes catseq-w2{0%,99%{opacity:1}100%{opacity:0}}
+@keyframes catseq-s2{0%,99%{opacity:0}100%{opacity:1}}
+/* Clawd(Claude Codeのキャラ): ページ下部でサッカーボール遊び(6s周期リフティング) */
 .clawd{position:absolute;z-index:1;pointer-events:none}
-.clawd .hop{animation:clhop .9s steps(1) infinite alternate}
-@keyframes clhop{from{transform:translateY(0)}to{transform:translateY(-8px)}}
 .clawd .blink{animation:clblink 4.2s steps(1) infinite}
 @keyframes clblink{0%,88%{opacity:1}89%,100%{opacity:0}}
+.cl-body{position:absolute;right:0;bottom:0;animation:clplay 6s steps(1) infinite}
+@keyframes clplay{
+  0%,6%{transform:translate(0,0)}
+  7%,12%{transform:translate(-7px,0)}
+  13%,42%{transform:translate(0,0)}
+  43%,50%{transform:translate(0,-10px)}
+  51%,100%{transform:translate(0,0)}
+}
+.cl-ball{position:absolute;left:118px;bottom:0;animation:ballplay 6s infinite}
+@keyframes ballplay{
+  0%,8%{transform:translate(0,0);animation-timing-function:steps(8)}
+  30%{transform:translate(95px,-146px);animation-timing-function:steps(4)}
+  42%{transform:translate(128px,-98px);animation-timing-function:steps(4)}
+  52%{transform:translate(140px,-152px);animation-timing-function:steps(7)}
+  70%{transform:translate(80px,-70px);animation-timing-function:steps(6)}
+  85%,100%{transform:translate(0,0)}
+}
+.cl-legB{opacity:0}
+.clawd .cl-legA{animation:cl-lA 6s steps(1) infinite}
+.clawd .cl-legB{animation:cl-lB 6s steps(1) infinite}
+@keyframes cl-lA{0%,6%{opacity:1}7%,12%{opacity:0}13%,100%{opacity:1}}
+@keyframes cl-lB{0%,6%{opacity:0}7%,12%{opacity:1}13%,100%{opacity:0}}
 
 
 .nav{position:absolute;bottom:0;left:0;right:0;height:62px;display:flex;align-items:center;
@@ -577,6 +605,64 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 <!-- ===== 8. STEP3 ===== -->
 <section class="slide fB">
   <div class="dpatch" style="right:-100px;top:-90px;width:440px;height:340px;--c:rgba(244,199,79,.32);--d:.2s"></div>
+  <!-- ドットの猫(左から歩いてきて、途中で座ったまま見守る) -->
+  <div class="pxcat rev" style="left:-160px;bottom:118px">
+    <div class="cwalk">
+    <svg width="126" height="90" viewBox="0 0 14 10" shape-rendering="crispEdges">
+      <rect x="1" y="0" width="1" height="1" fill="#6d766f"/><rect x="4" y="0" width="1" height="1" fill="#6d766f"/>
+      <rect x="1" y="1" width="4" height="1" fill="#a9b1aa"/>
+      <rect x="0" y="2" width="5" height="1" fill="#a9b1aa"/>
+      <rect x="1" y="3" width="4" height="1" fill="#a9b1aa"/>
+      <rect x="1" y="2" width="1" height="1" fill="#3d4540"/>
+      <rect x="0" y="2" width="1" height="1" fill="#d2356f"/>
+      <rect x="5" y="3" width="7" height="1" fill="#a9b1aa"/>
+      <rect x="4" y="4" width="8" height="1" fill="#a9b1aa"/>
+      <rect x="4" y="5" width="7" height="1" fill="#a9b1aa"/>
+      <rect x="6" y="3" width="1" height="2" fill="#6d766f"/>
+      <rect x="9" y="3" width="1" height="2" fill="#6d766f"/>
+      <rect x="4" y="4" width="1" height="1" fill="#ffffff"/>
+      <rect x="12" y="3" width="1" height="1" fill="#6d766f"/>
+      <rect x="12" y="2" width="1" height="1" fill="#6d766f"/>
+      <rect x="13" y="1" width="1" height="1" fill="#6d766f"/>
+      <g class="fwA">
+        <rect x="4" y="6" width="1" height="2" fill="#a9b1aa"/>
+        <rect x="10" y="6" width="1" height="2" fill="#a9b1aa"/>
+        <rect x="6" y="6" width="1" height="1" fill="#6d766f"/>
+        <rect x="8" y="6" width="1" height="1" fill="#6d766f"/>
+      </g>
+      <g class="fwB">
+        <rect x="5" y="6" width="1" height="2" fill="#a9b1aa"/>
+        <rect x="9" y="6" width="1" height="2" fill="#a9b1aa"/>
+        <rect x="7" y="6" width="1" height="1" fill="#6d766f"/>
+      </g>
+    </svg>
+    </div>
+    <div class="csit">
+    <svg width="126" height="90" viewBox="0 0 14 10" shape-rendering="crispEdges">
+      <rect x="1" y="0" width="1" height="1" fill="#6d766f"/><rect x="4" y="0" width="1" height="1" fill="#6d766f"/>
+      <rect x="1" y="1" width="4" height="1" fill="#a9b1aa"/>
+      <rect x="0" y="2" width="5" height="1" fill="#a9b1aa"/>
+      <rect x="1" y="3" width="4" height="1" fill="#a9b1aa"/>
+      <rect x="1" y="2" width="1" height="1" fill="#3d4540"/>
+      <rect x="0" y="2" width="1" height="1" fill="#d2356f"/>
+      <rect x="4" y="4" width="1" height="4" fill="#a9b1aa"/>
+      <rect x="5" y="4" width="5" height="1" fill="#a9b1aa"/>
+      <rect x="5" y="5" width="6" height="1" fill="#a9b1aa"/>
+      <rect x="5" y="6" width="6" height="1" fill="#a9b1aa"/>
+      <rect x="6" y="7" width="5" height="1" fill="#a9b1aa"/>
+      <rect x="7" y="4" width="1" height="2" fill="#6d766f"/>
+      <rect x="9" y="5" width="1" height="2" fill="#6d766f"/>
+      <rect x="4" y="4" width="1" height="1" fill="#ffffff"/>
+      <g class="fwA">
+        <rect x="11" y="4" width="1" height="3" fill="#6d766f"/>
+      </g>
+      <g class="fwB">
+        <rect x="11" y="5" width="1" height="2" fill="#6d766f"/>
+        <rect x="12" y="4" width="1" height="1" fill="#6d766f"/>
+      </g>
+    </svg>
+    </div>
+  </div>
   <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">Step 3</div>
   <h2 class="bloom" style="--d:.22s;font-size:56px;line-height:1.35;position:relative;z-index:2">Claude Code を<span class="pxmark" style="--d:.9s">インストール</span></h2>
   <p class="bloom" style="--d:.4s;font-size:20px;line-height:1.9;margin-top:16px;position:relative;z-index:2">下のコマンドをコピーして、ターミナルに貼り付けて Enter(推奨の方法。Node.js 等の準備は不要)。</p>
@@ -1063,17 +1149,32 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 <!-- ===== 12. もっと深めたい ===== -->
 <section class="slide fB">
   <div class="dpatch" style="right:-90px;top:-80px;width:420px;height:320px;--c:rgba(149,201,113,.36);--d:.2s"></div>
-  <!-- Clawd(Claude Codeのキャラクター): みんな使えるようになったお祝いに登場 -->
-  <div class="clawd bloom" style="--d:.7s;right:170px;top:88px;width:140px;height:100px">
-    <div class="hop">
+  <!-- Clawd(Claude Codeのキャラクター): ページ下部でサッカーボールのリフティング遊び -->
+  <div class="clawd bloom" style="--d:.7s;right:150px;bottom:88px;width:320px;height:210px">
+    <div class="cl-ball">
+      <svg width="36" height="36" viewBox="0 0 6 6" shape-rendering="crispEdges">
+        <rect x="2" y="0" width="2" height="1" fill="#3d4540"/>
+        <rect x="1" y="1" width="1" height="1" fill="#3d4540"/><rect x="2" y="1" width="2" height="1" fill="#ffffff"/><rect x="4" y="1" width="1" height="1" fill="#3d4540"/>
+        <rect x="0" y="2" width="1" height="2" fill="#3d4540"/><rect x="1" y="2" width="1" height="2" fill="#ffffff"/><rect x="2" y="2" width="2" height="2" fill="#1e1e1e"/><rect x="4" y="2" width="1" height="2" fill="#ffffff"/><rect x="5" y="2" width="1" height="2" fill="#3d4540"/>
+        <rect x="1" y="4" width="1" height="1" fill="#3d4540"/><rect x="2" y="4" width="2" height="1" fill="#ffffff"/><rect x="4" y="4" width="1" height="1" fill="#3d4540"/>
+        <rect x="2" y="5" width="2" height="1" fill="#3d4540"/>
+      </svg>
+    </div>
+    <div class="cl-body">
       <svg width="140" height="98" viewBox="0 0 20 14" shape-rendering="crispEdges">
         <rect x="3" y="0" width="14" height="1" fill="#d97757"/>
         <rect x="2" y="1" width="16" height="9" fill="#d97757"/>
         <rect x="3" y="10" width="14" height="1" fill="#d97757"/>
         <rect x="0" y="4" width="2" height="3" fill="#d97757"/>
         <rect x="18" y="4" width="2" height="3" fill="#d97757"/>
-        <rect x="4" y="11" width="2" height="3" fill="#d97757"/>
-        <rect x="7" y="11" width="2" height="3" fill="#d97757"/>
+        <g class="cl-legA">
+          <rect x="4" y="11" width="2" height="3" fill="#d97757"/>
+          <rect x="7" y="11" width="2" height="3" fill="#d97757"/>
+        </g>
+        <g class="cl-legB">
+          <rect x="0" y="11" width="5" height="2" fill="#d97757"/>
+          <rect x="7" y="11" width="2" height="3" fill="#d97757"/>
+        </g>
         <rect x="12" y="11" width="2" height="3" fill="#d97757"/>
         <rect x="15" y="11" width="2" height="3" fill="#d97757"/>
         <g class="blink">
@@ -1083,8 +1184,6 @@ html,body{height:100%;overflow:hidden;background:#11160f;
       </svg>
     </div>
   </div>
-  <div class="sd" style="position:absolute;right:140px;top:76px;width:10px;height:10px;background:var(--y);--sdl:.4s"></div>
-  <div class="sd" style="position:absolute;right:330px;top:168px;width:10px;height:10px;background:var(--y);--sdl:1.8s"></div>
   <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">Next 9</div>
   <h2 class="bloom" style="--d:.22s;font-size:52px;line-height:1.35;position:relative;z-index:2">あとで試せる——持ち帰りメニュー<span class="pxmark" style="--d:.9s">9つ</span></h2>
   <p class="bloom" style="--d:.4s;font-size:18px;line-height:1.75;margin-top:10px;position:relative;z-index:2">①〜⑦は、右上のコピーで<b>前提の確認→本編→振り返りまで一式の長文プロンプト</b>が入る。今日の記憶が薄れていても、そのまま貼れば続きから始められる(【 】は置き換え可。例のままでもOK)。</p>
