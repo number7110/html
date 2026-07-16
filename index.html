@@ -324,6 +324,9 @@ h1 .acc-g{color:var(--g3)} h1 .acc-o{color:var(--o2)}
 @keyframes dap{from{transform:translate(0,0) scale(1)}to{transform:translate(90px,-60px) scale(1.15)}}
 #koiCanvas{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:1;transition:opacity 1.2s ease}
 .koi-off #pond,.koi-off #koiCanvas{opacity:0}
+/* 表紙は錦鯉のみ: Saplingの木(種・幹・花)は隠し、2ページ目以降でフェードイン */
+#grove{transition:opacity 1.2s ease}
+#stage:not(.koi-off) #grove{opacity:0}
 </style>
 </head>
 <body>
