@@ -159,10 +159,19 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 .slide.in .rd.rb{opacity:.16}
 @keyframes rfall{from{transform:translate(0,0)}to{transform:translate(-60px,1260px)}}
 .pxcloud{position:absolute;z-index:1;pointer-events:none}
-/* 猫: 2コマ歩行で右から左へ横断 */
-.pxcat{position:absolute;z-index:1;pointer-events:none;opacity:0}
-.slide.in .pxcat{opacity:1;animation:catwalk 22s steps(88) infinite}
-@keyframes catwalk{from{transform:translate(0,0)}to{transform:translate(-2320px,0)}}
+/* 猫: ゆっくり歩き→途中で座って一休み→また歩き出す(36s周期) */
+.pxcat{position:absolute;z-index:1;pointer-events:none;opacity:0;width:126px;height:90px}
+.pxcat>div{position:absolute;left:0;top:0;opacity:0}
+.slide.in .pxcat{opacity:1;animation:catwalk 36s steps(44) infinite}
+@keyframes catwalk{
+  0%{transform:translate(0,0)}
+  40%,54%{transform:translate(-1160px,0)}
+  100%{transform:translate(-2320px,0)}
+}
+.slide.in .cwalk{animation:catseq-w 36s steps(1) infinite}
+.slide.in .csit{animation:catseq-s 36s steps(1) infinite}
+@keyframes catseq-w{0%,39%{opacity:1}40%,53%{opacity:0}54%,100%{opacity:1}}
+@keyframes catseq-s{0%,39%{opacity:0}40%,53%{opacity:1}54%,100%{opacity:0}}
 
 
 .nav{position:absolute;bottom:0;left:0;right:0;height:62px;display:flex;align-items:center;
@@ -485,8 +494,9 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 <!-- ===== 7. STEP2 ===== -->
 <section class="slide fB">
   <div class="dpatch" style="left:-90px;bottom:-100px;width:420px;height:330px;--c:rgba(149,201,113,.35);--d:.25s"></div>
-  <!-- ドットの猫(2コマ歩行で右から左へ) -->
+  <!-- ドットの猫(歩き→座って一休み→また歩く) -->
   <div class="pxcat" style="right:-160px;bottom:118px">
+    <div class="cwalk">
     <svg width="126" height="90" viewBox="0 0 14 10" shape-rendering="crispEdges">
       <rect x="1" y="0" width="1" height="1" fill="#F18B00"/><rect x="4" y="0" width="1" height="1" fill="#F18B00"/>
       <rect x="1" y="1" width="4" height="1" fill="#FAB350"/>
@@ -515,6 +525,32 @@ html,body{height:100%;overflow:hidden;background:#11160f;
         <rect x="7" y="6" width="1" height="1" fill="#F18B00"/>
       </g>
     </svg>
+    </div>
+    <div class="csit">
+    <svg width="126" height="90" viewBox="0 0 14 10" shape-rendering="crispEdges">
+      <rect x="1" y="0" width="1" height="1" fill="#F18B00"/><rect x="4" y="0" width="1" height="1" fill="#F18B00"/>
+      <rect x="1" y="1" width="4" height="1" fill="#FAB350"/>
+      <rect x="0" y="2" width="5" height="1" fill="#FAB350"/>
+      <rect x="1" y="3" width="4" height="1" fill="#FAB350"/>
+      <rect x="1" y="2" width="1" height="1" fill="#3d4540"/>
+      <rect x="0" y="2" width="1" height="1" fill="#d2356f"/>
+      <rect x="4" y="4" width="1" height="4" fill="#FAB350"/>
+      <rect x="5" y="4" width="5" height="1" fill="#FAB350"/>
+      <rect x="5" y="5" width="6" height="1" fill="#FAB350"/>
+      <rect x="5" y="6" width="6" height="1" fill="#FAB350"/>
+      <rect x="6" y="7" width="5" height="1" fill="#FAB350"/>
+      <rect x="7" y="4" width="1" height="2" fill="#F18B00"/>
+      <rect x="9" y="5" width="1" height="2" fill="#F18B00"/>
+      <rect x="4" y="4" width="1" height="1" fill="#ffffff"/>
+      <g class="fwA">
+        <rect x="11" y="4" width="1" height="3" fill="#F18B00"/>
+      </g>
+      <g class="fwB">
+        <rect x="11" y="5" width="1" height="2" fill="#F18B00"/>
+        <rect x="12" y="4" width="1" height="1" fill="#F18B00"/>
+      </g>
+    </svg>
+    </div>
   </div>
   <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">Step 2</div>
   <h2 class="bloom" style="--d:.22s;font-size:56px;line-height:1.35;position:relative;z-index:2"><span class="pxmark" style="--d:.9s">ターミナル</span>を開く</h2>
