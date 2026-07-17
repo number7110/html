@@ -44,11 +44,12 @@ export default async function handler(req, res) {
     // タイムスタンプ接頭辞で一意化＆時系列ソート可能に
     const pathname = `uploads/${Date.now()}-${filename}`;
     const blob = await put(pathname, body, {
-      access: 'public',
+      access: 'private',
       contentType: 'text/html; charset=utf-8',
       addRandomSuffix: false,
     });
-    res.status(200).json({ ok: true, name: filename, pathname: blob.pathname, url: blob.url });
+    // 公開URLは存在しない(privateストア)。閲覧は必ず /api/view?p=<pathname> 経由。
+    res.status(200).json({ ok: true, name: filename, pathname: blob.pathname, viewPath: '/api/view?p=' + encodeURIComponent(blob.pathname) });
   } catch (err) {
     const status = err?.statusCode || 500;
     const message = status === 413 ? 'ファイルが大きすぎます（最大5MB）' : (err?.message || 'アップロードに失敗しました');

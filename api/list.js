@@ -7,10 +7,10 @@ export default async function handler(req, res) {
       .map((b) => {
         const base = b.pathname.replace(/^uploads\//, '');
         const m = base.match(/^(\d+)-(.*)$/);
+        // blob URL はクライアントに一切返さない(閲覧は /api/view?p= 経由のみ)
         return {
           name: m ? m[2] : base,
           pathname: b.pathname,
-          url: b.url,
           size: b.size,
           uploadedAt: b.uploadedAt,
         };

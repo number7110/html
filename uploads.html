@@ -188,7 +188,7 @@ async function loadList(){
     for (const it of items){
       const a = document.createElement('a');
       a.className = 'item';
-      a.href = '/api/view?u=' + encodeURIComponent(it.url);
+      a.href = '/api/view?p=' + encodeURIComponent(it.pathname);
       a.target = '_blank';
       a.rel = 'noopener';
       a.innerHTML =

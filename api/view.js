@@ -1,31 +1,23 @@
+import { get } from '@vercel/blob';
+
 // アップロードされたHTMLを自ドメイン経由で配信する。
-// これにより Blob の公開URLを直接晒さず、閲覧も Basic認証(middleware) の内側に留める。
+// Blob は private ストアに保存されており公開URLが存在しないため、
+// 閲覧は必ずこのエンドポイント = Basic認証(middleware) の内側に限定される。
 export default async function handler(req, res) {
   try {
     const reqUrl = new URL(req.url, `http://${req.headers.host}`);
-    const target = reqUrl.searchParams.get('u');
-    if (!target) {
-      res.status(400).send('Missing url');
+    const p = reqUrl.searchParams.get('p');
+    // uploads/ 配下の安全なpathnameのみ許可
+    if (!p || !/^uploads\/[\w.\-]{1,120}$/.test(p)) {
+      res.status(400).send('Invalid path');
       return;
     }
-    let parsed;
-    try {
-      parsed = new URL(target);
-    } catch {
-      res.status(400).send('Invalid url');
+    const result = await get(p, { access: 'private' });
+    if (!result || result.statusCode !== 200 || !result.stream) {
+      res.status(404).send('コンテンツが見つかりません');
       return;
     }
-    // Vercel Blob の公開ストレージ以外は拒否（SSRF対策）
-    if (parsed.protocol !== 'https:' || !/(^|\.)blob\.vercel-storage\.com$/.test(parsed.hostname)) {
-      res.status(400).send('Forbidden url');
-      return;
-    }
-    const upstream = await fetch(parsed.toString());
-    if (!upstream.ok) {
-      res.status(502).send('コンテンツの取得に失敗しました');
-      return;
-    }
-    const html = await upstream.text();
+    const html = await new Response(result.stream).text();
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     // アップロードコンテンツはサンドボックス下で表示（プレゼン用に script/forms 等は許可）
     res.setHeader(
