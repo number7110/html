@@ -1176,25 +1176,25 @@ html,body{height:100%;overflow:hidden;background:#11160f;
   <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">Next Step 1 — GA4 × Sheets</div>
   <h2 class="bloom" style="--d:.22s;font-size:52px;line-height:1.35;position:relative;z-index:2">GA4 のデータを、<span class="pxmark" style="--d:.9s">スプレッドシート</span>へ</h2>
   <div class="duo" style="margin-top:22px">
-    <div class="wcard bloom" style="--d:.45s;--wc:rgba(250,179,80,.42);padding:12px 18px">
+    <div class="wcard step" data-step="1" style="--wc:rgba(250,179,80,.42);padding:12px 18px">
       <div class="p-tag" style="color:var(--o2)">① ロボットの身分証を作る</div>
       <p style="font-size:15px;line-height:1.7">Google Cloud で<b>サービスアカウント</b>を作成し、JSONキーを保存。今回の鍵は OAuth ではなくこれ。人間はパスワード、ロボットは<b>JSONキー</b>で入る。</p>
     </div>
-    <div class="wcard bloom" style="--d:.6s;--wc:rgba(149,201,113,.45);padding:12px 18px">
+    <div class="wcard step" data-step="2" style="--wc:rgba(149,201,113,.45);padding:12px 18px">
       <div class="p-tag">② GA4 に招待する</div>
       <p style="font-size:15px;line-height:1.7">GA4 の「管理 → アクセス管理」にサービスアカウントのメールを<b>「閲覧者」で追加</b>。「プロパティ設定」で<b>プロパティID</b>も控える。</p>
     </div>
-    <div class="wcard bloom" style="--d:.75s;--wc:rgba(47,109,176,.4);padding:12px 18px">
+    <div class="wcard step" data-step="3" style="--wc:rgba(47,109,176,.4);padding:12px 18px">
       <div class="p-tag" style="color:var(--bl)">③ スプシにも招待する</div>
       <p style="font-size:15px;line-height:1.7">データの置き場にするスプレッドシートに、同じメールを<b>「編集者」で共有</b>。これで読む先と書く先の両方に入れる。</p>
     </div>
   </div>
-  <div class="prompt step" data-step="1" style="margin-top:20px">
+  <div class="prompt step" data-step="4" style="margin-top:20px">
     <button class="copybtn" type="button"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
     <div class="p-tag">① 接続の設定(Code に送る) 〈【 】は置き換えて送信〉</div>
     <p class="ctext" style="font-size:14px;line-height:1.72">Claude Code から Google Analytics(GA4) のデータを読めるようにして、スプレッドシートにも書き込めるようにしたいです。私はエンジニアではないので、専門用語はかみくだいて、1ステップずつ、私が「できた」と返してから次に進めてください。画面操作が必要なところは、どこを押すかまで具体的にお願いします。(1) Google Cloud のプロジェクト(この資料の前半で作ったものがあれば再利用)で、Google Analytics Data API と Google Sheets API を有効化する。(2) サービスアカウントを作成して、JSONキーを安全な場所に保存する(保存場所はあなたが指定してください)。(3) GA4 の「管理 → アクセス管理」に、サービスアカウントのメールアドレスを「閲覧者」で追加する。あわせて「管理 → プロパティ設定」でプロパティIDを控える手順も教えてください。(4) データの置き場にする Google スプレッドシート「【スプレッドシートの名前】」に、同じメールアドレスを「編集者」で共有する。(5) 接続テストとして、プロパティ【GA4のプロパティID】の昨日のセッション数・表示回数・アクティブユーザー数を教えてください。エラーや見たことのない画面が出たらキャプチャを貼るので、一緒に解決しながら進めてください。</p>
   </div>
-  <div class="prompt step" data-step="2" style="margin-top:14px;--wc:rgba(55,118,28,.5)">
+  <div class="prompt step" data-step="5" style="margin-top:14px;--wc:rgba(55,118,28,.5)">
     <button class="copybtn" type="button"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
     <div class="p-tag" style="color:var(--g3)">② つながったら、データをシートへ 〈【 】は置き換えて送信〉</div>
     <p class="ctext" style="font-size:14px;line-height:1.72">GA4 プロパティ【GA4のプロパティID】から、過去28日分の日別データ(日付・セッション数・表示回数・アクティブユーザー数)を取得して、スプレッドシート「【スプレッドシートの名前】」の『GAデータ』シートに書き込んでください。要件は次のとおりです。(1) 1行目はヘッダー行にする。(2) 日付の昇順で並べる。(3) すでに同じ日付の行があれば上書きして、重複させない。(4) 終わったら何行書き込んだかを報告して、私がシートを開いて確認する手順も教えてください。</p>
