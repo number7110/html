@@ -181,6 +181,25 @@ html,body{height:100%;overflow:hidden;background:#11160f;
 .slide.in .pxcat.rev .csit{animation:catseq-s2 11.5s steps(1) forwards}
 @keyframes catseq-w2{0%,99%{opacity:1}100%{opacity:0}}
 @keyframes catseq-s2{0%,99%{opacity:0}100%{opacity:1}}
+/* 犬(v2): 歩いて登場→立ち止まる / フリスビー追いかけ / 咥えて戻る */
+.pxdog{position:absolute;z-index:1;pointer-events:none;opacity:0}
+.pxdog>div{position:absolute;left:0;top:0;opacity:0}
+.slide.in .pxdog.walkin{opacity:1;animation:dogin 14s steps(40) forwards}
+@keyframes dogin{from{transform:translate(0,0)}to{transform:translate(820px,0)}}
+.slide.in .pxdog.walkin .dwalk{animation:catseq-w2 14s steps(1) forwards}
+.slide.in .pxdog.walkin .dstand{animation:catseq-s2 14s steps(1) forwards}
+.pxdog.back svg{transform:scaleX(-1)}
+.slide.in .pxdog.back{opacity:1;animation:dogback 14s steps(40) forwards}
+@keyframes dogback{from{transform:translate(0,0)}to{transform:translate(-820px,0)}}
+.slide.in .pxdog.back .dwalk{animation:catseq-w2 14s steps(1) forwards}
+.slide.in .pxdog.back .dstand{animation:catseq-s2 14s steps(1) forwards}
+.pxfris{position:absolute;z-index:1;pointer-events:none;opacity:0}
+.slide.in .pxfris{opacity:1;animation:frisfly 7s steps(48) infinite}
+@keyframes frisfly{from{transform:translate(0,0)}to{transform:translate(2350px,130px)}}
+.slide.in .pxdog.chase{opacity:1;animation:dogchase 7s steps(44) infinite}
+@keyframes dogchase{from{transform:translate(0,0)}to{transform:translate(2350px,0)}}
+.drA{animation:fwA .26s steps(1) infinite}
+.drB{animation:fwB .26s steps(1) infinite}
 /* Clawd(Claude Codeのキャラ): ページ下部でサッカーボール遊び(6s周期リフティング) */
 .clawd{position:absolute;z-index:1;pointer-events:none}
 .clawd .blink{animation:clblink 4.2s steps(1) infinite}
@@ -230,7 +249,7 @@ html,body{height:100%;overflow:hidden;background:#11160f;
   .dpatch{opacity:1}
   .pxbranch rect{opacity:1}
   .pb,.pf{display:none}
-  .pxfly,.rd,.birdfly,.pxcat{display:none}
+  .pxfly,.rd,.birdfly,.pxcat,.pxdog,.pxfris{display:none}
   .birdsit{opacity:1}
 }
 </style>
@@ -1146,6 +1165,88 @@ html,body{height:100%;overflow:hidden;background:#11160f;
   <p class="hero-line step" data-step="2" style="font-size:28px;margin-top:40px">スライドが、そのまま<span style="color:var(--g3)">Web ページ</span>になる。<br>気に入らないところは——もう分かるはず、会話で直せる。</p>
 </section>
 
+<!-- ===== v2-1. GA4→スプレッドシート ===== -->
+<section class="slide fB">
+  <div class="dpatch" style="left:-90px;top:-80px;width:430px;height:340px;--c:rgba(250,179,80,.34);--d:.2s"></div>
+  <!-- ドットの犬: ゆっくり歩いてきて立ち止まる(しっぽフリフリ) -->
+  <div class="pxdog walkin" style="left:-170px;bottom:118px">
+    <div class="dwalk"><svg width="152" height="88" viewBox="0 0 19 11" shape-rendering="crispEdges"><rect x="2" y="4" width="10" height="1" fill="#FAB350"/><rect x="2" y="5" width="11" height="1" fill="#FAB350"/><rect x="2" y="6" width="11" height="1" fill="#FAB350"/><rect x="3" y="7" width="9" height="1" fill="#FAB350"/><rect x="10" y="1" width="4" height="1" fill="#FAB350"/><rect x="9" y="2" width="6" height="1" fill="#FAB350"/><rect x="9" y="3" width="7" height="1" fill="#FAB350"/><rect x="10" y="0" width="1" height="1" fill="#F18B00"/><rect x="13" y="0" width="1" height="1" fill="#F18B00"/><rect x="4" y="4" width="3" height="1" fill="#F18B00"/><rect x="5" y="5" width="2" height="1" fill="#F18B00"/><rect x="13" y="3" width="2" height="1" fill="#ffffff"/><rect x="15" y="3" width="1" height="1" fill="#3d4540"/><rect x="12" y="2" width="1" height="1" fill="#3d4540"/><rect x="11" y="5" width="2" height="1" fill="#ffffff"/><rect x="1" y="3" width="1" height="1" fill="#F18B00"/><rect x="0" y="2" width="1" height="1" fill="#F18B00"/><g class="fwA"><rect x="10" y="8" width="1" height="2" fill="#FAB350"/><rect x="3" y="8" width="1" height="2" fill="#FAB350"/><rect x="8" y="8" width="1" height="1" fill="#F18B00"/><rect x="5" y="8" width="1" height="1" fill="#F18B00"/></g><g class="fwB"><rect x="11" y="8" width="1" height="2" fill="#FAB350"/><rect x="4" y="8" width="1" height="2" fill="#FAB350"/><rect x="7" y="8" width="1" height="1" fill="#F18B00"/></g></svg></div>
+    <div class="dstand"><svg width="152" height="88" viewBox="0 0 19 11" shape-rendering="crispEdges"><rect x="2" y="4" width="10" height="1" fill="#FAB350"/><rect x="2" y="5" width="11" height="1" fill="#FAB350"/><rect x="2" y="6" width="11" height="1" fill="#FAB350"/><rect x="3" y="7" width="9" height="1" fill="#FAB350"/><rect x="10" y="1" width="4" height="1" fill="#FAB350"/><rect x="9" y="2" width="6" height="1" fill="#FAB350"/><rect x="9" y="3" width="7" height="1" fill="#FAB350"/><rect x="10" y="0" width="1" height="1" fill="#F18B00"/><rect x="13" y="0" width="1" height="1" fill="#F18B00"/><rect x="4" y="4" width="3" height="1" fill="#F18B00"/><rect x="5" y="5" width="2" height="1" fill="#F18B00"/><rect x="13" y="3" width="2" height="1" fill="#ffffff"/><rect x="15" y="3" width="1" height="1" fill="#3d4540"/><rect x="12" y="2" width="1" height="1" fill="#3d4540"/><rect x="11" y="5" width="2" height="1" fill="#ffffff"/><g class="fwA"><rect x="1" y="3" width="1" height="1" fill="#F18B00"/><rect x="0" y="2" width="1" height="1" fill="#F18B00"/></g><g class="fwB"><rect x="1" y="3" width="1" height="1" fill="#F18B00"/><rect x="0" y="3" width="1" height="1" fill="#F18B00"/></g><rect x="10" y="8" width="1" height="2" fill="#FAB350"/><rect x="4" y="8" width="1" height="2" fill="#FAB350"/><rect x="8" y="8" width="1" height="1" fill="#F18B00"/><rect x="6" y="8" width="1" height="1" fill="#F18B00"/></svg></div>
+  </div>
+  <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">Next Step 1 — GA4 × Sheets</div>
+  <h2 class="bloom" style="--d:.22s;font-size:52px;line-height:1.35;position:relative;z-index:2">GA4 のデータを、<span class="pxmark" style="--d:.9s">スプレッドシート</span>へ</h2>
+  <div class="duo" style="margin-top:22px">
+    <div class="wcard bloom" style="--d:.45s;--wc:rgba(250,179,80,.42);padding:12px 18px">
+      <div class="p-tag" style="color:var(--o2)">① ロボットの身分証を作る</div>
+      <p style="font-size:15px;line-height:1.7">Google Cloud で<b>サービスアカウント</b>を作成し、JSONキーを保存。今回の鍵は OAuth ではなくこれ。人間はパスワード、ロボットは<b>JSONキー</b>で入る。</p>
+    </div>
+    <div class="wcard bloom" style="--d:.6s;--wc:rgba(149,201,113,.45);padding:12px 18px">
+      <div class="p-tag">② GA4 に招待する</div>
+      <p style="font-size:15px;line-height:1.7">GA4 の「管理 → アクセス管理」にサービスアカウントのメールを<b>「閲覧者」で追加</b>。「プロパティ設定」で<b>プロパティID</b>も控える。</p>
+    </div>
+    <div class="wcard bloom" style="--d:.75s;--wc:rgba(47,109,176,.4);padding:12px 18px">
+      <div class="p-tag" style="color:var(--bl)">③ スプシにも招待する</div>
+      <p style="font-size:15px;line-height:1.7">データの置き場にするスプレッドシートに、同じメールを<b>「編集者」で共有</b>。これで読む先と書く先の両方に入れる。</p>
+    </div>
+  </div>
+  <div class="prompt step" data-step="1" style="margin-top:20px">
+    <button class="copybtn" type="button"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
+    <div class="p-tag">① 接続の設定(Code に送る) 〈【 】は置き換えて送信〉</div>
+    <p class="ctext" style="font-size:14px;line-height:1.72">Claude Code から Google Analytics(GA4) のデータを読めるようにして、スプレッドシートにも書き込めるようにしたいです。私はエンジニアではないので、専門用語はかみくだいて、1ステップずつ、私が「できた」と返してから次に進めてください。画面操作が必要なところは、どこを押すかまで具体的にお願いします。(1) Google Cloud のプロジェクト(この資料の前半で作ったものがあれば再利用)で、Google Analytics Data API と Google Sheets API を有効化する。(2) サービスアカウントを作成して、JSONキーを安全な場所に保存する(保存場所はあなたが指定してください)。(3) GA4 の「管理 → アクセス管理」に、サービスアカウントのメールアドレスを「閲覧者」で追加する。あわせて「管理 → プロパティ設定」でプロパティIDを控える手順も教えてください。(4) データの置き場にする Google スプレッドシート「【スプレッドシートの名前】」に、同じメールアドレスを「編集者」で共有する。(5) 接続テストとして、プロパティ【GA4のプロパティID】の昨日のセッション数・表示回数・アクティブユーザー数を教えてください。エラーや見たことのない画面が出たらキャプチャを貼るので、一緒に解決しながら進めてください。</p>
+  </div>
+  <div class="prompt step" data-step="2" style="margin-top:14px;--wc:rgba(55,118,28,.5)">
+    <button class="copybtn" type="button"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
+    <div class="p-tag" style="color:var(--g3)">② つながったら、データをシートへ 〈【 】は置き換えて送信〉</div>
+    <p class="ctext" style="font-size:14px;line-height:1.72">GA4 プロパティ【GA4のプロパティID】から、過去28日分の日別データ(日付・セッション数・表示回数・アクティブユーザー数)を取得して、スプレッドシート「【スプレッドシートの名前】」の『GAデータ』シートに書き込んでください。要件は次のとおりです。(1) 1行目はヘッダー行にする。(2) 日付の昇順で並べる。(3) すでに同じ日付の行があれば上書きして、重複させない。(4) 終わったら何行書き込んだかを報告して、私がシートを開いて確認する手順も教えてください。</p>
+  </div>
+</section>
+
+<!-- ===== v2-2. dailyで自動化 ===== -->
+<section class="slide fB">
+  <div class="dpatch" style="left:-90px;bottom:-100px;width:430px;height:330px;--c:rgba(244,199,79,.32);--d:.25s"></div>
+  <!-- ドットの犬: 投げられたフリスビーを追いかけて横切る -->
+  <div class="pxfris" style="left:-240px;bottom:250px"><svg width="56" height="16" viewBox="0 0 7 2" shape-rendering="crispEdges"><g class="fwA"><rect x="1" y="0" width="5" height="1" fill="#2f6db0"/><rect x="0" y="1" width="7" height="1" fill="#2f6db0"/><rect x="2" y="0" width="2" height="1" fill="#ffffff"/></g><g class="fwB"><rect x="0" y="0" width="5" height="1" fill="#2f6db0"/><rect x="0" y="1" width="7" height="1" fill="#2f6db0"/><rect x="1" y="0" width="2" height="1" fill="#ffffff"/></g></svg></div>
+  <div class="pxdog chase" style="left:-450px;bottom:118px">
+    <div class="dwalk" style="opacity:1"><svg width="152" height="88" viewBox="0 0 19 11" shape-rendering="crispEdges"><rect x="2" y="4" width="10" height="1" fill="#FAB350"/><rect x="2" y="5" width="11" height="1" fill="#FAB350"/><rect x="2" y="6" width="11" height="1" fill="#FAB350"/><rect x="3" y="7" width="9" height="1" fill="#FAB350"/><rect x="10" y="1" width="4" height="1" fill="#FAB350"/><rect x="9" y="2" width="6" height="1" fill="#FAB350"/><rect x="9" y="3" width="7" height="1" fill="#FAB350"/><rect x="10" y="0" width="1" height="1" fill="#F18B00"/><rect x="13" y="0" width="1" height="1" fill="#F18B00"/><rect x="4" y="4" width="3" height="1" fill="#F18B00"/><rect x="5" y="5" width="2" height="1" fill="#F18B00"/><rect x="13" y="3" width="2" height="1" fill="#ffffff"/><rect x="15" y="3" width="1" height="1" fill="#3d4540"/><rect x="12" y="2" width="1" height="1" fill="#3d4540"/><rect x="11" y="5" width="2" height="1" fill="#ffffff"/><rect x="1" y="3" width="1" height="1" fill="#F18B00"/><rect x="0" y="2" width="1" height="1" fill="#F18B00"/><g class="drA"><rect x="11" y="8" width="1" height="2" fill="#FAB350"/><rect x="2" y="8" width="1" height="2" fill="#FAB350"/><rect x="8" y="8" width="1" height="1" fill="#F18B00"/></g><g class="drB"><rect x="9" y="8" width="1" height="2" fill="#FAB350"/><rect x="4" y="8" width="1" height="2" fill="#FAB350"/><rect x="6" y="8" width="1" height="1" fill="#F18B00"/></g></svg></div>
+  </div>
+  <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">Next Step 2 — Daily</div>
+  <h2 class="bloom" style="--d:.22s;font-size:54px;line-height:1.35;position:relative;z-index:2">毎日、<span class="pxmark" style="--d:.9s">自動で</span>運ぶ</h2>
+  <p class="bloom" style="--d:.4s;font-size:20px;line-height:1.9;margin-top:14px;position:relative;z-index:2">一度きりの取り込みを「毎朝勝手に動く」に変える。<b>方法選びからチャットに任せる</b>のが今日のやり方。</p>
+  <div class="prompt step" data-step="1" style="margin-top:24px">
+    <button class="copybtn" type="button"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
+    <div class="p-tag">コピペ用プロンプト(Code に送る)</div>
+    <p class="ctext" style="font-size:15px;line-height:1.8">さきほど設定した「GA4 → スプレッドシート」のデータ取り込みを、毎日自動で動くようにしたいです。(1) 実現方法の選択肢(Claude Code のスケジュール実行、GAS のトリガー、パソコンの cron など)を、費用・パソコンを点けっぱなしにする必要があるか・難しさ、の3点で表に整理して教えてください。(2) 私の状況に合うものを1つ推薦して、理由も教えてください。(3) その方法で、毎朝7時に前日分のデータを『GAデータ』シートに追記する仕組みを、一緒に設定してください。必要なコードや設定には、あとで読んで分かる日本語の説明を付けてください。(4) 手動で1回テスト実行して、シートに行が増えることを一緒に確認してください。(5) 失敗した日に気づけるように、ログの見方か通知の仕組みも入れてください。(6) 最後に、止め方と実行時間の変え方も教えてください。</p>
+  </div>
+  <div class="wcard step" data-step="2" style="margin-top:18px;--wc:rgba(250,179,80,.42)">
+    <div class="p-tag" style="color:var(--o2)">大事なのは「失敗に気づけること」</div>
+    <p style="font-size:16.5px">自動化は、動かなかった朝に気づけてこそ。<b>ログか通知までセットで作る</b>のを忘れずに——それも上のプロンプトに入っている。</p>
+  </div>
+  <p class="hero-line step" data-step="3" style="font-size:26px;margin-top:28px">明日の朝から、シートは<span style="color:var(--g3)">ひとりでに増えていく</span>。</p>
+</section>
+
+<!-- ===== v2-3. GASで将来見込み ===== -->
+<section class="slide fB">
+  <div class="dpatch" style="right:-90px;top:-80px;width:420px;height:320px;--c:rgba(149,201,113,.36);--d:.2s"></div>
+  <!-- ドットの犬: フリスビーを咥えてゆっくり戻ってくる -->
+  <div class="pxdog back" style="right:-170px;bottom:118px">
+    <div class="dwalk"><svg width="152" height="88" viewBox="0 0 19 11" shape-rendering="crispEdges"><rect x="2" y="4" width="10" height="1" fill="#FAB350"/><rect x="2" y="5" width="11" height="1" fill="#FAB350"/><rect x="2" y="6" width="11" height="1" fill="#FAB350"/><rect x="3" y="7" width="9" height="1" fill="#FAB350"/><rect x="10" y="1" width="4" height="1" fill="#FAB350"/><rect x="9" y="2" width="6" height="1" fill="#FAB350"/><rect x="9" y="3" width="7" height="1" fill="#FAB350"/><rect x="10" y="0" width="1" height="1" fill="#F18B00"/><rect x="13" y="0" width="1" height="1" fill="#F18B00"/><rect x="4" y="4" width="3" height="1" fill="#F18B00"/><rect x="5" y="5" width="2" height="1" fill="#F18B00"/><rect x="13" y="3" width="2" height="1" fill="#ffffff"/><rect x="15" y="3" width="1" height="1" fill="#3d4540"/><rect x="12" y="2" width="1" height="1" fill="#3d4540"/><rect x="11" y="5" width="2" height="1" fill="#ffffff"/><rect x="1" y="3" width="1" height="1" fill="#F18B00"/><rect x="0" y="2" width="1" height="1" fill="#F18B00"/><g class="fwA"><rect x="10" y="8" width="1" height="2" fill="#FAB350"/><rect x="3" y="8" width="1" height="2" fill="#FAB350"/><rect x="8" y="8" width="1" height="1" fill="#F18B00"/><rect x="5" y="8" width="1" height="1" fill="#F18B00"/></g><g class="fwB"><rect x="11" y="8" width="1" height="2" fill="#FAB350"/><rect x="4" y="8" width="1" height="2" fill="#FAB350"/><rect x="7" y="8" width="1" height="1" fill="#F18B00"/></g><rect x="14" y="4" width="4" height="1" fill="#2f6db0"/><rect x="15" y="4" width="1" height="1" fill="#ffffff"/></svg></div>
+    <div class="dstand"><svg width="152" height="88" viewBox="0 0 19 11" shape-rendering="crispEdges"><rect x="2" y="4" width="10" height="1" fill="#FAB350"/><rect x="2" y="5" width="11" height="1" fill="#FAB350"/><rect x="2" y="6" width="11" height="1" fill="#FAB350"/><rect x="3" y="7" width="9" height="1" fill="#FAB350"/><rect x="10" y="1" width="4" height="1" fill="#FAB350"/><rect x="9" y="2" width="6" height="1" fill="#FAB350"/><rect x="9" y="3" width="7" height="1" fill="#FAB350"/><rect x="10" y="0" width="1" height="1" fill="#F18B00"/><rect x="13" y="0" width="1" height="1" fill="#F18B00"/><rect x="4" y="4" width="3" height="1" fill="#F18B00"/><rect x="5" y="5" width="2" height="1" fill="#F18B00"/><rect x="13" y="3" width="2" height="1" fill="#ffffff"/><rect x="15" y="3" width="1" height="1" fill="#3d4540"/><rect x="12" y="2" width="1" height="1" fill="#3d4540"/><rect x="11" y="5" width="2" height="1" fill="#ffffff"/><g class="fwA"><rect x="1" y="3" width="1" height="1" fill="#F18B00"/><rect x="0" y="2" width="1" height="1" fill="#F18B00"/></g><g class="fwB"><rect x="1" y="3" width="1" height="1" fill="#F18B00"/><rect x="0" y="3" width="1" height="1" fill="#F18B00"/></g><rect x="10" y="8" width="1" height="2" fill="#FAB350"/><rect x="4" y="8" width="1" height="2" fill="#FAB350"/><rect x="8" y="8" width="1" height="1" fill="#F18B00"/><rect x="6" y="8" width="1" height="1" fill="#F18B00"/><rect x="14" y="4" width="4" height="1" fill="#2f6db0"/><rect x="15" y="4" width="1" height="1" fill="#ffffff"/></svg></div>
+  </div>
+  <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">Next Step 3 — Forecast</div>
+  <h2 class="bloom" style="--d:.22s;font-size:54px;line-height:1.35;position:relative;z-index:2">GAS で<span class="pxmark" style="--d:.9s">将来見込み</span>を自動算出</h2>
+  <p class="bloom" style="--d:.4s;font-size:20px;line-height:1.9;margin-top:14px;position:relative;z-index:2">最後はスプレッドシート側。たまっていくデータから<b>「今月はどこに着地しそうか」</b>を毎朝計算させる。</p>
+  <div class="prompt step" data-step="1" style="margin-top:24px">
+    <button class="copybtn" type="button"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
+    <div class="p-tag">コピペ用プロンプト(チャットに送る) 〈【 】は置き換えて送信〉</div>
+    <p class="ctext" style="font-size:14px;line-height:1.72">スプレッドシート「【スプレッドシートの名前】」の『GAデータ』シートには、日別のセッション数・表示回数・アクティブユーザー数が毎日たまっていきます。GAS(Google Apps Script)で、当月の月末着地見込みを自動計算する仕組みを作ってください。私はコードが書けない前提でお願いします。(1) スプレッドシートの「拡張機能 → Apps Script」を開くところから、コードをどこに貼り付けて、どう保存・実行するかまで、画面のどこを押すかを具体的に案内してください。(2) 計算のロジックは「当月の実績 + 直近7日平均 × 残り日数」を基本に、私にも分かるように説明してください。もっと良い方法があれば提案も歓迎です。(3) 結果は『見込み』シートに、当月実績・日次ペース・月末見込み・前月同期比が一目で分かる形で書き出してください。(4) コードには日本語のコメントを付けてください。(5) 毎朝8時に自動で再計算するトリガーを設定してください。初回実行で出る権限の警告画面(「このアプリは確認されていません」など)の進み方も教えてください。(6) 手動で1回実行して、数字が合っているか一緒に確認してください。</p>
+  </div>
+  <div class="wcard step" data-step="2" style="margin-top:18px;--wc:rgba(55,118,28,.5)">
+    <div class="p-tag">できあがったら——あとは毎朝見るだけ</div>
+    <p style="font-size:16.5px">毎朝『見込み』シートを開くだけ。おかしな数字の日はキャプチャしてチャットへ。<b>「グラフも足して」「広告経由だけ分けて」——改修はぜんぶ会話でできる。</b></p>
+  </div>
+  <p class="hero-line step" data-step="3" style="font-size:26px;margin-top:26px">実績を眺める道具が、<span style="color:var(--o2)">先を見通す道具</span>に変わる。</p>
+</section>
+
 <!-- ===== 12. もっと深めたい ===== -->
 <section class="slide fB">
   <div class="dpatch" style="right:-90px;top:-80px;width:420px;height:320px;--c:rgba(149,201,113,.36);--d:.2s"></div>
@@ -1312,537 +1413,6 @@ html,body{height:100%;overflow:hidden;background:#11160f;
     </div>
   </div>
   <p class="step" data-step="10" style="font-size:15.5px;color:#8a938c;margin-top:18px;position:relative;z-index:2">参考: docs.claude.com(セットアップ)・support.claude.com(Drive連携) ※最新は公式かチャットで確認。</p>
-</section>
-
-<!-- ===== v2-1. GA4→スプレッドシート ===== -->
-<section class="slide fB">
-  <div class="dpatch" style="left:-90px;top:-80px;width:430px;height:340px;--c:rgba(250,179,80,.34);--d:.2s"></div>
-  <!-- ドットの雨雲(最難関の空模様) -->
-  <div class="pxcloud bloom" style="--d:.3s;right:150px;top:58px">
-    <svg width="266" height="70" viewBox="0 0 19 5" shape-rendering="crispEdges">
-      <rect x="4" y="0" width="3" height="1" fill="rgba(61,69,64,.30)"/><rect x="10" y="0" width="5" height="1" fill="rgba(61,69,64,.30)"/>
-      <rect x="3" y="1" width="13" height="1" fill="rgba(61,69,64,.30)"/>
-      <rect x="1" y="2" width="17" height="2" fill="rgba(61,69,64,.30)"/>
-      <rect x="2" y="4" width="15" height="1" fill="rgba(61,69,64,.30)"/>
-    </svg>
-  </div>
-  <div class="pxcloud bloom" style="--d:.5s;left:560px;top:34px">
-    <svg width="190" height="50" viewBox="0 0 19 5" shape-rendering="crispEdges">
-      <rect x="4" y="0" width="3" height="1" fill="rgba(61,69,64,.18)"/><rect x="10" y="0" width="5" height="1" fill="rgba(61,69,64,.18)"/>
-      <rect x="3" y="1" width="13" height="1" fill="rgba(61,69,64,.18)"/>
-      <rect x="1" y="2" width="17" height="2" fill="rgba(61,69,64,.18)"/>
-      <rect x="2" y="4" width="15" height="1" fill="rgba(61,69,64,.18)"/>
-    </svg>
-  </div>
-  <!-- ドットの雨(ステップ落下) -->
-  <div class="rd" style="left:4%;--rdd:1.35s;--rdl:-.2s"></div>
-  <div class="rd rb" style="left:9%;--rdd:1.8s;--rdl:-1.1s"></div>
-  <div class="rd" style="left:16%;--rdd:1.5s;--rdl:-.7s"></div>
-  <div class="rd rb" style="left:23%;--rdd:1.9s;--rdl:-.4s"></div>
-  <div class="rd" style="left:30%;--rdd:1.25s;--rdl:-1s"></div>
-  <div class="rd rb" style="left:37%;--rdd:1.7s;--rdl:-1.5s"></div>
-  <div class="rd" style="left:44%;--rdd:1.45s;--rdl:-.3s"></div>
-  <div class="rd" style="left:52%;--rdd:1.3s;--rdl:-.9s"></div>
-  <div class="rd rb" style="left:59%;--rdd:1.85s;--rdl:-.6s"></div>
-  <div class="rd" style="left:66%;--rdd:1.4s;--rdl:-1.2s"></div>
-  <div class="rd rb" style="left:73%;--rdd:1.75s;--rdl:-.1s"></div>
-  <div class="rd" style="left:80%;--rdd:1.3s;--rdl:-.5s"></div>
-  <div class="rd rb" style="left:87%;--rdd:1.65s;--rdl:-1.4s"></div>
-  <div class="rd" style="left:94%;--rdd:1.5s;--rdl:-.8s"></div>
-  <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">Next Step 1 — GA4 × Sheets</div>
-  <h2 class="bloom" style="--d:.22s;font-size:52px;line-height:1.35;position:relative;z-index:2">GA4 のデータを、<span class="pxmark" style="--d:.9s">スプレッドシート</span>へ</h2>
-  <div class="duo" style="margin-top:22px">
-    <div class="wcard bloom" style="--d:.45s;--wc:rgba(250,179,80,.42);padding:12px 18px">
-      <div class="p-tag" style="color:var(--o2)">① ロボットの身分証を作る</div>
-      <p style="font-size:15px;line-height:1.7">Google Cloud で<b>サービスアカウント</b>を作成し、JSONキーを保存。今回の鍵は OAuth ではなくこれ。人間はパスワード、ロボットは<b>JSONキー</b>で入る。</p>
-    </div>
-    <div class="wcard bloom" style="--d:.6s;--wc:rgba(149,201,113,.45);padding:12px 18px">
-      <div class="p-tag">② GA4 に招待する</div>
-      <p style="font-size:15px;line-height:1.7">GA4 の「管理 → アクセス管理」にサービスアカウントのメールを<b>「閲覧者」で追加</b>。「プロパティ設定」で<b>プロパティID</b>も控える。</p>
-    </div>
-    <div class="wcard bloom" style="--d:.75s;--wc:rgba(47,109,176,.4);padding:12px 18px">
-      <div class="p-tag" style="color:var(--bl)">③ スプシにも招待する</div>
-      <p style="font-size:15px;line-height:1.7">データの置き場にするスプレッドシートに、同じメールを<b>「編集者」で共有</b>。これで読む先と書く先の両方に入れる。</p>
-    </div>
-  </div>
-  <div class="prompt step" data-step="1" style="margin-top:20px">
-    <button class="copybtn" type="button"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
-    <div class="p-tag">① 接続の設定(Code に送る) 〈【 】は置き換えて送信〉</div>
-    <p class="ctext" style="font-size:14px;line-height:1.72">Claude Code から Google Analytics(GA4) のデータを読めるようにして、スプレッドシートにも書き込めるようにしたいです。私はエンジニアではないので、専門用語はかみくだいて、1ステップずつ、私が「できた」と返してから次に進めてください。画面操作が必要なところは、どこを押すかまで具体的にお願いします。(1) Google Cloud のプロジェクト(この資料の前半で作ったものがあれば再利用)で、Google Analytics Data API と Google Sheets API を有効化する。(2) サービスアカウントを作成して、JSONキーを安全な場所に保存する(保存場所はあなたが指定してください)。(3) GA4 の「管理 → アクセス管理」に、サービスアカウントのメールアドレスを「閲覧者」で追加する。あわせて「管理 → プロパティ設定」でプロパティIDを控える手順も教えてください。(4) データの置き場にする Google スプレッドシート「【スプレッドシートの名前】」に、同じメールアドレスを「編集者」で共有する。(5) 接続テストとして、プロパティ【GA4のプロパティID】の昨日のセッション数・表示回数・アクティブユーザー数を教えてください。エラーや見たことのない画面が出たらキャプチャを貼るので、一緒に解決しながら進めてください。</p>
-  </div>
-  <div class="prompt step" data-step="2" style="margin-top:14px;--wc:rgba(55,118,28,.5)">
-    <button class="copybtn" type="button"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
-    <div class="p-tag" style="color:var(--g3)">② つながったら、データをシートへ 〈【 】は置き換えて送信〉</div>
-    <p class="ctext" style="font-size:14px;line-height:1.72">GA4 プロパティ【GA4のプロパティID】から、過去28日分の日別データ(日付・セッション数・表示回数・アクティブユーザー数)を取得して、スプレッドシート「【スプレッドシートの名前】」の『GAデータ』シートに書き込んでください。要件は次のとおりです。(1) 1行目はヘッダー行にする。(2) 日付の昇順で並べる。(3) すでに同じ日付の行があれば上書きして、重複させない。(4) 終わったら何行書き込んだかを報告して、私がシートを開いて確認する手順も教えてください。</p>
-  </div>
-</section>
-
-<!-- ===== v2-2. dailyで自動化 ===== -->
-<section class="slide fB">
-  <div class="dpatch" style="left:-90px;bottom:-100px;width:430px;height:330px;--c:rgba(244,199,79,.32);--d:.25s"></div>
-  <!-- ドットの猫(歩き→座って一休み→また歩く) -->
-  <div class="pxcat" style="right:-160px;bottom:118px">
-    <div class="cwalk">
-    <svg width="126" height="90" viewBox="0 0 14 10" shape-rendering="crispEdges">
-      <rect x="1" y="0" width="1" height="1" fill="#6d766f"/><rect x="4" y="0" width="1" height="1" fill="#6d766f"/>
-      <rect x="1" y="1" width="4" height="1" fill="#a9b1aa"/>
-      <rect x="0" y="2" width="5" height="1" fill="#a9b1aa"/>
-      <rect x="1" y="3" width="4" height="1" fill="#a9b1aa"/>
-      <rect x="1" y="2" width="1" height="1" fill="#3d4540"/>
-      <rect x="0" y="2" width="1" height="1" fill="#d2356f"/>
-      <rect x="5" y="3" width="7" height="1" fill="#a9b1aa"/>
-      <rect x="4" y="4" width="8" height="1" fill="#a9b1aa"/>
-      <rect x="4" y="5" width="7" height="1" fill="#a9b1aa"/>
-      <rect x="6" y="3" width="1" height="2" fill="#6d766f"/>
-      <rect x="9" y="3" width="1" height="2" fill="#6d766f"/>
-      <rect x="4" y="4" width="1" height="1" fill="#ffffff"/>
-      <rect x="12" y="3" width="1" height="1" fill="#6d766f"/>
-      <rect x="12" y="2" width="1" height="1" fill="#6d766f"/>
-      <rect x="13" y="1" width="1" height="1" fill="#6d766f"/>
-      <g class="fwA">
-        <rect x="4" y="6" width="1" height="2" fill="#a9b1aa"/>
-        <rect x="10" y="6" width="1" height="2" fill="#a9b1aa"/>
-        <rect x="6" y="6" width="1" height="1" fill="#6d766f"/>
-        <rect x="8" y="6" width="1" height="1" fill="#6d766f"/>
-      </g>
-      <g class="fwB">
-        <rect x="5" y="6" width="1" height="2" fill="#a9b1aa"/>
-        <rect x="9" y="6" width="1" height="2" fill="#a9b1aa"/>
-        <rect x="7" y="6" width="1" height="1" fill="#6d766f"/>
-      </g>
-    </svg>
-    </div>
-    <div class="csit">
-    <svg width="126" height="90" viewBox="0 0 14 10" shape-rendering="crispEdges">
-      <rect x="1" y="0" width="1" height="1" fill="#6d766f"/><rect x="4" y="0" width="1" height="1" fill="#6d766f"/>
-      <rect x="1" y="1" width="4" height="1" fill="#a9b1aa"/>
-      <rect x="0" y="2" width="5" height="1" fill="#a9b1aa"/>
-      <rect x="1" y="3" width="4" height="1" fill="#a9b1aa"/>
-      <rect x="1" y="2" width="1" height="1" fill="#3d4540"/>
-      <rect x="0" y="2" width="1" height="1" fill="#d2356f"/>
-      <rect x="4" y="4" width="1" height="4" fill="#a9b1aa"/>
-      <rect x="5" y="4" width="5" height="1" fill="#a9b1aa"/>
-      <rect x="5" y="5" width="6" height="1" fill="#a9b1aa"/>
-      <rect x="5" y="6" width="6" height="1" fill="#a9b1aa"/>
-      <rect x="6" y="7" width="5" height="1" fill="#a9b1aa"/>
-      <rect x="7" y="4" width="1" height="2" fill="#6d766f"/>
-      <rect x="9" y="5" width="1" height="2" fill="#6d766f"/>
-      <rect x="4" y="4" width="1" height="1" fill="#ffffff"/>
-      <g class="fwA">
-        <rect x="11" y="4" width="1" height="3" fill="#6d766f"/>
-      </g>
-      <g class="fwB">
-        <rect x="11" y="5" width="1" height="2" fill="#6d766f"/>
-        <rect x="12" y="4" width="1" height="1" fill="#6d766f"/>
-      </g>
-    </svg>
-    </div>
-  </div>
-  <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">Next Step 2 — Daily</div>
-  <h2 class="bloom" style="--d:.22s;font-size:54px;line-height:1.35;position:relative;z-index:2">毎日、<span class="pxmark" style="--d:.9s">自動で</span>運ぶ</h2>
-  <p class="bloom" style="--d:.4s;font-size:20px;line-height:1.9;margin-top:14px;position:relative;z-index:2">一度きりの取り込みを「毎朝勝手に動く」に変える。<b>方法選びからチャットに任せる</b>のが今日のやり方。</p>
-  <div class="prompt step" data-step="1" style="margin-top:24px">
-    <button class="copybtn" type="button"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
-    <div class="p-tag">コピペ用プロンプト(Code に送る)</div>
-    <p class="ctext" style="font-size:15px;line-height:1.8">さきほど設定した「GA4 → スプレッドシート」のデータ取り込みを、毎日自動で動くようにしたいです。(1) 実現方法の選択肢(Claude Code のスケジュール実行、GAS のトリガー、パソコンの cron など)を、費用・パソコンを点けっぱなしにする必要があるか・難しさ、の3点で表に整理して教えてください。(2) 私の状況に合うものを1つ推薦して、理由も教えてください。(3) その方法で、毎朝7時に前日分のデータを『GAデータ』シートに追記する仕組みを、一緒に設定してください。必要なコードや設定には、あとで読んで分かる日本語の説明を付けてください。(4) 手動で1回テスト実行して、シートに行が増えることを一緒に確認してください。(5) 失敗した日に気づけるように、ログの見方か通知の仕組みも入れてください。(6) 最後に、止め方と実行時間の変え方も教えてください。</p>
-  </div>
-  <div class="wcard step" data-step="2" style="margin-top:18px;--wc:rgba(250,179,80,.42)">
-    <div class="p-tag" style="color:var(--o2)">大事なのは「失敗に気づけること」</div>
-    <p style="font-size:16.5px">自動化は、動かなかった朝に気づけてこそ。<b>ログか通知までセットで作る</b>のを忘れずに——それも上のプロンプトに入っている。</p>
-  </div>
-  <p class="hero-line step" data-step="3" style="font-size:26px;margin-top:28px">明日の朝から、シートは<span style="color:var(--g3)">ひとりでに増えていく</span>。</p>
-</section>
-
-<!-- ===== v2-3. GASで将来見込み ===== -->
-<section class="slide fB">
-  <div class="dpatch" style="right:-90px;top:-80px;width:420px;height:320px;--c:rgba(149,201,113,.36);--d:.2s"></div>
-  <!-- ドットの虹(雨上がりの弧・セル連打で左から架かる・淡め) -->
-  <div style="position:absolute;right:110px;bottom:104px;width:680px;height:340px;z-index:1;pointer-events:none;opacity:.45">
-    <svg class="pxbranch" width="680" height="340" viewBox="0 0 44 22" shape-rendering="crispEdges">
-      <rect x="1" y="21" width="1" height="1" fill="#F18B00" style="--pd:0.15s"/>
-      <rect x="2" y="21" width="1" height="1" fill="#F4C74F" style="--pd:0.15s"/>
-      <rect x="3" y="21" width="1" height="1" fill="#95C971" style="--pd:0.15s"/>
-      <rect x="4" y="21" width="1" height="1" fill="#2f6db0" style="--pd:0.15s"/>
-      <rect x="5" y="21" width="1" height="1" fill="#d2356f" style="--pd:0.15s"/>
-      <rect x="1" y="20" width="1" height="1" fill="#F18B00" style="--pd:0.18s"/>
-      <rect x="2" y="20" width="1" height="1" fill="#F4C74F" style="--pd:0.18s"/>
-      <rect x="3" y="20" width="1" height="1" fill="#95C971" style="--pd:0.18s"/>
-      <rect x="4" y="20" width="1" height="1" fill="#2f6db0" style="--pd:0.18s"/>
-      <rect x="5" y="20" width="1" height="1" fill="#d2356f" style="--pd:0.19s"/>
-      <rect x="1" y="19" width="1" height="1" fill="#F18B00" style="--pd:0.21s"/>
-      <rect x="2" y="19" width="1" height="1" fill="#F4C74F" style="--pd:0.21s"/>
-      <rect x="3" y="19" width="1" height="1" fill="#95C971" style="--pd:0.22s"/>
-      <rect x="4" y="19" width="1" height="1" fill="#2f6db0" style="--pd:0.22s"/>
-      <rect x="5" y="19" width="1" height="1" fill="#d2356f" style="--pd:0.22s"/>
-      <rect x="1" y="18" width="1" height="1" fill="#F18B00" style="--pd:0.24s"/>
-      <rect x="2" y="18" width="1" height="1" fill="#F4C74F" style="--pd:0.24s"/>
-      <rect x="3" y="18" width="1" height="1" fill="#95C971" style="--pd:0.25s"/>
-      <rect x="4" y="18" width="1" height="1" fill="#2f6db0" style="--pd:0.25s"/>
-      <rect x="5" y="18" width="1" height="1" fill="#d2356f" style="--pd:0.26s"/>
-      <rect x="1" y="17" width="1" height="1" fill="#F18B00" style="--pd:0.27s"/>
-      <rect x="2" y="17" width="1" height="1" fill="#F4C74F" style="--pd:0.27s"/>
-      <rect x="3" y="17" width="1" height="1" fill="#95C971" style="--pd:0.28s"/>
-      <rect x="4" y="17" width="1" height="1" fill="#2f6db0" style="--pd:0.29s"/>
-      <rect x="5" y="17" width="1" height="1" fill="#d2356f" style="--pd:0.30s"/>
-      <rect x="1" y="16" width="1" height="1" fill="#F18B00" style="--pd:0.30s"/>
-      <rect x="2" y="16" width="1" height="1" fill="#F4C74F" style="--pd:0.30s"/>
-      <rect x="3" y="16" width="1" height="1" fill="#95C971" style="--pd:0.31s"/>
-      <rect x="4" y="16" width="1" height="1" fill="#2f6db0" style="--pd:0.32s"/>
-      <rect x="1" y="15" width="1" height="1" fill="#F18B00" style="--pd:0.33s"/>
-      <rect x="5" y="16" width="1" height="1" fill="#d2356f" style="--pd:0.33s"/>
-      <rect x="2" y="15" width="1" height="1" fill="#F4C74F" style="--pd:0.33s"/>
-      <rect x="2" y="15" width="1" height="1" fill="#F18B00" style="--pd:0.34s"/>
-      <rect x="3" y="15" width="1" height="1" fill="#F4C74F" style="--pd:0.34s"/>
-      <rect x="3" y="15" width="1" height="1" fill="#95C971" style="--pd:0.35s"/>
-      <rect x="4" y="15" width="1" height="1" fill="#95C971" style="--pd:0.35s"/>
-      <rect x="5" y="16" width="1" height="1" fill="#2f6db0" style="--pd:0.35s"/>
-      <rect x="2" y="14" width="1" height="1" fill="#F18B00" style="--pd:0.36s"/>
-      <rect x="5" y="15" width="1" height="1" fill="#2f6db0" style="--pd:0.36s"/>
-      <rect x="6" y="16" width="1" height="1" fill="#d2356f" style="--pd:0.36s"/>
-      <rect x="3" y="14" width="1" height="1" fill="#F4C74F" style="--pd:0.37s"/>
-      <rect x="6" y="15" width="1" height="1" fill="#d2356f" style="--pd:0.37s"/>
-      <rect x="4" y="14" width="1" height="1" fill="#95C971" style="--pd:0.38s"/>
-      <rect x="2" y="13" width="1" height="1" fill="#F18B00" style="--pd:0.39s"/>
-      <rect x="5" y="14" width="1" height="1" fill="#2f6db0" style="--pd:0.39s"/>
-      <rect x="3" y="13" width="1" height="1" fill="#F4C74F" style="--pd:0.40s"/>
-      <rect x="6" y="14" width="1" height="1" fill="#d2356f" style="--pd:0.41s"/>
-      <rect x="4" y="13" width="1" height="1" fill="#95C971" style="--pd:0.41s"/>
-      <rect x="3" y="13" width="1" height="1" fill="#F18B00" style="--pd:0.42s"/>
-      <rect x="3" y="12" width="1" height="1" fill="#F18B00" style="--pd:0.42s"/>
-      <rect x="4" y="13" width="1" height="1" fill="#F4C74F" style="--pd:0.42s"/>
-      <rect x="5" y="13" width="1" height="1" fill="#2f6db0" style="--pd:0.43s"/>
-      <rect x="4" y="12" width="1" height="1" fill="#F4C74F" style="--pd:0.43s"/>
-      <rect x="5" y="13" width="1" height="1" fill="#95C971" style="--pd:0.43s"/>
-      <rect x="6" y="13" width="1" height="1" fill="#2f6db0" style="--pd:0.44s"/>
-      <rect x="7" y="13" width="1" height="1" fill="#d2356f" style="--pd:0.45s"/>
-      <rect x="3" y="11" width="1" height="1" fill="#F18B00" style="--pd:0.45s"/>
-      <rect x="5" y="12" width="1" height="1" fill="#95C971" style="--pd:0.45s"/>
-      <rect x="4" y="11" width="1" height="1" fill="#F4C74F" style="--pd:0.47s"/>
-      <rect x="6" y="12" width="1" height="1" fill="#2f6db0" style="--pd:0.47s"/>
-      <rect x="4" y="11" width="1" height="1" fill="#F18B00" style="--pd:0.48s"/>
-      <rect x="4" y="10" width="1" height="1" fill="#F18B00" style="--pd:0.49s"/>
-      <rect x="5" y="11" width="1" height="1" fill="#F4C74F" style="--pd:0.49s"/>
-      <rect x="5" y="11" width="1" height="1" fill="#95C971" style="--pd:0.49s"/>
-      <rect x="7" y="12" width="1" height="1" fill="#d2356f" style="--pd:0.49s"/>
-      <rect x="6" y="11" width="1" height="1" fill="#95C971" style="--pd:0.50s"/>
-      <rect x="5" y="10" width="1" height="1" fill="#F4C74F" style="--pd:0.50s"/>
-      <rect x="7" y="11" width="1" height="1" fill="#2f6db0" style="--pd:0.51s"/>
-      <rect x="8" y="12" width="1" height="1" fill="#d2356f" style="--pd:0.52s"/>
-      <rect x="4" y="9" width="1" height="1" fill="#F18B00" style="--pd:0.52s"/>
-      <rect x="6" y="10" width="1" height="1" fill="#95C971" style="--pd:0.52s"/>
-      <rect x="5" y="9" width="1" height="1" fill="#F18B00" style="--pd:0.53s"/>
-      <rect x="8" y="11" width="1" height="1" fill="#d2356f" style="--pd:0.53s"/>
-      <rect x="6" y="9" width="1" height="1" fill="#F4C74F" style="--pd:0.54s"/>
-      <rect x="7" y="10" width="1" height="1" fill="#2f6db0" style="--pd:0.55s"/>
-      <rect x="7" y="10" width="1" height="1" fill="#95C971" style="--pd:0.55s"/>
-      <rect x="5" y="8" width="1" height="1" fill="#F18B00" style="--pd:0.55s"/>
-      <rect x="8" y="10" width="1" height="1" fill="#2f6db0" style="--pd:0.56s"/>
-      <rect x="7" y="9" width="1" height="1" fill="#95C971" style="--pd:0.56s"/>
-      <rect x="9" y="11" width="1" height="1" fill="#d2356f" style="--pd:0.57s"/>
-      <rect x="6" y="8" width="1" height="1" fill="#F18B00" style="--pd:0.58s"/>
-      <rect x="9" y="10" width="1" height="1" fill="#d2356f" style="--pd:0.58s"/>
-      <rect x="6" y="8" width="1" height="1" fill="#F4C74F" style="--pd:0.58s"/>
-      <rect x="7" y="8" width="1" height="1" fill="#F4C74F" style="--pd:0.59s"/>
-      <rect x="6" y="7" width="1" height="1" fill="#F18B00" style="--pd:0.59s"/>
-      <rect x="8" y="9" width="1" height="1" fill="#2f6db0" style="--pd:0.59s"/>
-      <rect x="8" y="9" width="1" height="1" fill="#95C971" style="--pd:0.60s"/>
-      <rect x="8" y="8" width="1" height="1" fill="#95C971" style="--pd:0.61s"/>
-      <rect x="9" y="9" width="1" height="1" fill="#2f6db0" style="--pd:0.61s"/>
-      <rect x="7" y="7" width="1" height="1" fill="#F18B00" style="--pd:0.62s"/>
-      <rect x="7" y="7" width="1" height="1" fill="#F4C74F" style="--pd:0.62s"/>
-      <rect x="9" y="9" width="1" height="1" fill="#d2356f" style="--pd:0.62s"/>
-      <rect x="10" y="9" width="1" height="1" fill="#d2356f" style="--pd:0.63s"/>
-      <rect x="7" y="6" width="1" height="1" fill="#F18B00" style="--pd:0.63s"/>
-      <rect x="8" y="7" width="1" height="1" fill="#F4C74F" style="--pd:0.63s"/>
-      <rect x="9" y="8" width="1" height="1" fill="#2f6db0" style="--pd:0.64s"/>
-      <rect x="9" y="8" width="1" height="1" fill="#95C971" style="--pd:0.65s"/>
-      <rect x="9" y="7" width="1" height="1" fill="#95C971" style="--pd:0.65s"/>
-      <rect x="8" y="6" width="1" height="1" fill="#F18B00" style="--pd:0.66s"/>
-      <rect x="10" y="8" width="1" height="1" fill="#2f6db0" style="--pd:0.66s"/>
-      <rect x="8" y="6" width="1" height="1" fill="#F4C74F" style="--pd:0.66s"/>
-      <rect x="9" y="6" width="1" height="1" fill="#F4C74F" style="--pd:0.67s"/>
-      <rect x="8" y="5" width="1" height="1" fill="#F18B00" style="--pd:0.68s"/>
-      <rect x="11" y="9" width="1" height="1" fill="#d2356f" style="--pd:0.68s"/>
-      <rect x="11" y="8" width="1" height="1" fill="#d2356f" style="--pd:0.68s"/>
-      <rect x="10" y="7" width="1" height="1" fill="#95C971" style="--pd:0.69s"/>
-      <rect x="10" y="7" width="1" height="1" fill="#2f6db0" style="--pd:0.69s"/>
-      <rect x="9" y="5" width="1" height="1" fill="#F18B00" style="--pd:0.70s"/>
-      <rect x="10" y="6" width="1" height="1" fill="#95C971" style="--pd:0.70s"/>
-      <rect x="11" y="7" width="1" height="1" fill="#2f6db0" style="--pd:0.70s"/>
-      <rect x="10" y="5" width="1" height="1" fill="#F4C74F" style="--pd:0.71s"/>
-      <rect x="12" y="8" width="1" height="1" fill="#d2356f" style="--pd:0.72s"/>
-      <rect x="9" y="4" width="1" height="1" fill="#F18B00" style="--pd:0.72s"/>
-      <rect x="11" y="6" width="1" height="1" fill="#95C971" style="--pd:0.73s"/>
-      <rect x="10" y="4" width="1" height="1" fill="#F18B00" style="--pd:0.73s"/>
-      <rect x="12" y="7" width="1" height="1" fill="#d2356f" style="--pd:0.74s"/>
-      <rect x="12" y="6" width="1" height="1" fill="#2f6db0" style="--pd:0.75s"/>
-      <rect x="11" y="5" width="1" height="1" fill="#F4C74F" style="--pd:0.75s"/>
-      <rect x="11" y="5" width="1" height="1" fill="#95C971" style="--pd:0.76s"/>
-      <rect x="11" y="4" width="1" height="1" fill="#F4C74F" style="--pd:0.76s"/>
-      <rect x="12" y="5" width="1" height="1" fill="#95C971" style="--pd:0.76s"/>
-      <rect x="13" y="7" width="1" height="1" fill="#d2356f" style="--pd:0.76s"/>
-      <rect x="11" y="4" width="1" height="1" fill="#F18B00" style="--pd:0.77s"/>
-      <rect x="11" y="3" width="1" height="1" fill="#F18B00" style="--pd:0.77s"/>
-      <rect x="12" y="4" width="1" height="1" fill="#F4C74F" style="--pd:0.79s"/>
-      <rect x="13" y="6" width="1" height="1" fill="#2f6db0" style="--pd:0.79s"/>
-      <rect x="12" y="3" width="1" height="1" fill="#F18B00" style="--pd:0.80s"/>
-      <rect x="13" y="5" width="1" height="1" fill="#95C971" style="--pd:0.80s"/>
-      <rect x="14" y="6" width="1" height="1" fill="#d2356f" style="--pd:0.80s"/>
-      <rect x="13" y="5" width="1" height="1" fill="#2f6db0" style="--pd:0.81s"/>
-      <rect x="13" y="4" width="1" height="1" fill="#F4C74F" style="--pd:0.82s"/>
-      <rect x="13" y="4" width="1" height="1" fill="#95C971" style="--pd:0.82s"/>
-      <rect x="14" y="5" width="1" height="1" fill="#2f6db0" style="--pd:0.82s"/>
-      <rect x="13" y="3" width="1" height="1" fill="#F4C74F" style="--pd:0.83s"/>
-      <rect x="13" y="3" width="1" height="1" fill="#F18B00" style="--pd:0.83s"/>
-      <rect x="13" y="2" width="1" height="1" fill="#F18B00" style="--pd:0.84s"/>
-      <rect x="14" y="4" width="1" height="1" fill="#95C971" style="--pd:0.84s"/>
-      <rect x="15" y="6" width="1" height="1" fill="#d2356f" style="--pd:0.84s"/>
-      <rect x="14" y="3" width="1" height="1" fill="#F4C74F" style="--pd:0.85s"/>
-      <rect x="15" y="5" width="1" height="1" fill="#2f6db0" style="--pd:0.86s"/>
-      <rect x="14" y="2" width="1" height="1" fill="#F18B00" style="--pd:0.87s"/>
-      <rect x="15" y="4" width="1" height="1" fill="#95C971" style="--pd:0.87s"/>
-      <rect x="16" y="6" width="1" height="1" fill="#d2356f" style="--pd:0.88s"/>
-      <rect x="15" y="3" width="1" height="1" fill="#F4C74F" style="--pd:0.89s"/>
-      <rect x="16" y="5" width="1" height="1" fill="#d2356f" style="--pd:0.89s"/>
-      <rect x="15" y="2" width="1" height="1" fill="#F18B00" style="--pd:0.90s"/>
-      <rect x="16" y="5" width="1" height="1" fill="#2f6db0" style="--pd:0.90s"/>
-      <rect x="16" y="4" width="1" height="1" fill="#2f6db0" style="--pd:0.90s"/>
-      <rect x="15" y="3" width="1" height="1" fill="#95C971" style="--pd:0.90s"/>
-      <rect x="16" y="3" width="1" height="1" fill="#95C971" style="--pd:0.91s"/>
-      <rect x="15" y="2" width="1" height="1" fill="#F4C74F" style="--pd:0.91s"/>
-      <rect x="15" y="1" width="1" height="1" fill="#F18B00" style="--pd:0.91s"/>
-      <rect x="16" y="2" width="1" height="1" fill="#F4C74F" style="--pd:0.92s"/>
-      <rect x="17" y="5" width="1" height="1" fill="#d2356f" style="--pd:0.92s"/>
-      <rect x="16" y="1" width="1" height="1" fill="#F18B00" style="--pd:0.93s"/>
-      <rect x="17" y="4" width="1" height="1" fill="#2f6db0" style="--pd:0.93s"/>
-      <rect x="17" y="3" width="1" height="1" fill="#95C971" style="--pd:0.94s"/>
-      <rect x="17" y="2" width="1" height="1" fill="#F4C74F" style="--pd:0.95s"/>
-      <rect x="17" y="1" width="1" height="1" fill="#F18B00" style="--pd:0.95s"/>
-      <rect x="18" y="5" width="1" height="1" fill="#d2356f" style="--pd:0.96s"/>
-      <rect x="18" y="4" width="1" height="1" fill="#2f6db0" style="--pd:0.97s"/>
-      <rect x="18" y="3" width="1" height="1" fill="#95C971" style="--pd:0.97s"/>
-      <rect x="18" y="2" width="1" height="1" fill="#F4C74F" style="--pd:0.98s"/>
-      <rect x="18" y="1" width="1" height="1" fill="#F18B00" style="--pd:0.99s"/>
-      <rect x="19" y="5" width="1" height="1" fill="#d2356f" style="--pd:0.99s"/>
-      <rect x="19" y="4" width="1" height="1" fill="#2f6db0" style="--pd:1.00s"/>
-      <rect x="19" y="3" width="1" height="1" fill="#95C971" style="--pd:1.00s"/>
-      <rect x="19" y="2" width="1" height="1" fill="#F4C74F" style="--pd:1.01s"/>
-      <rect x="19" y="1" width="1" height="1" fill="#F18B00" style="--pd:1.02s"/>
-      <rect x="20" y="5" width="1" height="1" fill="#d2356f" style="--pd:1.03s"/>
-      <rect x="20" y="4" width="1" height="1" fill="#2f6db0" style="--pd:1.03s"/>
-      <rect x="20" y="3" width="1" height="1" fill="#95C971" style="--pd:1.04s"/>
-      <rect x="20" y="2" width="1" height="1" fill="#F4C74F" style="--pd:1.04s"/>
-      <rect x="20" y="1" width="1" height="1" fill="#F18B00" style="--pd:1.04s"/>
-      <rect x="21" y="5" width="1" height="1" fill="#d2356f" style="--pd:1.07s"/>
-      <rect x="21" y="3" width="1" height="1" fill="#95C971" style="--pd:1.07s"/>
-      <rect x="21" y="4" width="1" height="1" fill="#2f6db0" style="--pd:1.07s"/>
-      <rect x="21" y="2" width="1" height="1" fill="#F4C74F" style="--pd:1.07s"/>
-      <rect x="21" y="1" width="1" height="1" fill="#F18B00" style="--pd:1.07s"/>
-      <rect x="22" y="1" width="1" height="1" fill="#F18B00" style="--pd:1.10s"/>
-      <rect x="22" y="2" width="1" height="1" fill="#F4C74F" style="--pd:1.10s"/>
-      <rect x="22" y="3" width="1" height="1" fill="#95C971" style="--pd:1.10s"/>
-      <rect x="22" y="4" width="1" height="1" fill="#2f6db0" style="--pd:1.10s"/>
-      <rect x="22" y="5" width="1" height="1" fill="#d2356f" style="--pd:1.10s"/>
-      <rect x="23" y="1" width="1" height="1" fill="#F18B00" style="--pd:1.13s"/>
-      <rect x="23" y="2" width="1" height="1" fill="#F4C74F" style="--pd:1.13s"/>
-      <rect x="23" y="3" width="1" height="1" fill="#95C971" style="--pd:1.13s"/>
-      <rect x="23" y="4" width="1" height="1" fill="#2f6db0" style="--pd:1.13s"/>
-      <rect x="23" y="5" width="1" height="1" fill="#d2356f" style="--pd:1.14s"/>
-      <rect x="24" y="1" width="1" height="1" fill="#F18B00" style="--pd:1.16s"/>
-      <rect x="24" y="2" width="1" height="1" fill="#F4C74F" style="--pd:1.16s"/>
-      <rect x="24" y="3" width="1" height="1" fill="#95C971" style="--pd:1.17s"/>
-      <rect x="24" y="4" width="1" height="1" fill="#2f6db0" style="--pd:1.17s"/>
-      <rect x="24" y="5" width="1" height="1" fill="#d2356f" style="--pd:1.17s"/>
-      <rect x="25" y="1" width="1" height="1" fill="#F18B00" style="--pd:1.19s"/>
-      <rect x="25" y="2" width="1" height="1" fill="#F4C74F" style="--pd:1.19s"/>
-      <rect x="25" y="3" width="1" height="1" fill="#95C971" style="--pd:1.20s"/>
-      <rect x="25" y="4" width="1" height="1" fill="#2f6db0" style="--pd:1.20s"/>
-      <rect x="25" y="5" width="1" height="1" fill="#d2356f" style="--pd:1.21s"/>
-      <rect x="26" y="1" width="1" height="1" fill="#F18B00" style="--pd:1.22s"/>
-      <rect x="26" y="2" width="1" height="1" fill="#F4C74F" style="--pd:1.22s"/>
-      <rect x="26" y="3" width="1" height="1" fill="#95C971" style="--pd:1.23s"/>
-      <rect x="26" y="4" width="1" height="1" fill="#2f6db0" style="--pd:1.24s"/>
-      <rect x="26" y="5" width="1" height="1" fill="#d2356f" style="--pd:1.25s"/>
-      <rect x="27" y="1" width="1" height="1" fill="#F18B00" style="--pd:1.25s"/>
-      <rect x="27" y="2" width="1" height="1" fill="#F4C74F" style="--pd:1.25s"/>
-      <rect x="27" y="3" width="1" height="1" fill="#95C971" style="--pd:1.26s"/>
-      <rect x="27" y="4" width="1" height="1" fill="#2f6db0" style="--pd:1.27s"/>
-      <rect x="28" y="1" width="1" height="1" fill="#F18B00" style="--pd:1.28s"/>
-      <rect x="27" y="5" width="1" height="1" fill="#d2356f" style="--pd:1.28s"/>
-      <rect x="28" y="2" width="1" height="1" fill="#F4C74F" style="--pd:1.28s"/>
-      <rect x="28" y="2" width="1" height="1" fill="#F18B00" style="--pd:1.29s"/>
-      <rect x="28" y="3" width="1" height="1" fill="#F4C74F" style="--pd:1.29s"/>
-      <rect x="28" y="3" width="1" height="1" fill="#95C971" style="--pd:1.30s"/>
-      <rect x="28" y="4" width="1" height="1" fill="#95C971" style="--pd:1.30s"/>
-      <rect x="27" y="5" width="1" height="1" fill="#2f6db0" style="--pd:1.30s"/>
-      <rect x="29" y="2" width="1" height="1" fill="#F18B00" style="--pd:1.31s"/>
-      <rect x="28" y="5" width="1" height="1" fill="#2f6db0" style="--pd:1.31s"/>
-      <rect x="27" y="6" width="1" height="1" fill="#d2356f" style="--pd:1.31s"/>
-      <rect x="29" y="3" width="1" height="1" fill="#F4C74F" style="--pd:1.32s"/>
-      <rect x="28" y="6" width="1" height="1" fill="#d2356f" style="--pd:1.32s"/>
-      <rect x="29" y="4" width="1" height="1" fill="#95C971" style="--pd:1.33s"/>
-      <rect x="30" y="2" width="1" height="1" fill="#F18B00" style="--pd:1.34s"/>
-      <rect x="29" y="5" width="1" height="1" fill="#2f6db0" style="--pd:1.34s"/>
-      <rect x="30" y="3" width="1" height="1" fill="#F4C74F" style="--pd:1.35s"/>
-      <rect x="29" y="6" width="1" height="1" fill="#d2356f" style="--pd:1.36s"/>
-      <rect x="30" y="4" width="1" height="1" fill="#95C971" style="--pd:1.36s"/>
-      <rect x="30" y="3" width="1" height="1" fill="#F18B00" style="--pd:1.37s"/>
-      <rect x="31" y="3" width="1" height="1" fill="#F18B00" style="--pd:1.37s"/>
-      <rect x="30" y="4" width="1" height="1" fill="#F4C74F" style="--pd:1.37s"/>
-      <rect x="30" y="5" width="1" height="1" fill="#2f6db0" style="--pd:1.38s"/>
-      <rect x="31" y="4" width="1" height="1" fill="#F4C74F" style="--pd:1.38s"/>
-      <rect x="30" y="5" width="1" height="1" fill="#95C971" style="--pd:1.38s"/>
-      <rect x="30" y="6" width="1" height="1" fill="#2f6db0" style="--pd:1.39s"/>
-      <rect x="30" y="7" width="1" height="1" fill="#d2356f" style="--pd:1.40s"/>
-      <rect x="32" y="3" width="1" height="1" fill="#F18B00" style="--pd:1.40s"/>
-      <rect x="31" y="5" width="1" height="1" fill="#95C971" style="--pd:1.40s"/>
-      <rect x="32" y="4" width="1" height="1" fill="#F4C74F" style="--pd:1.42s"/>
-      <rect x="31" y="6" width="1" height="1" fill="#2f6db0" style="--pd:1.42s"/>
-      <rect x="32" y="4" width="1" height="1" fill="#F18B00" style="--pd:1.43s"/>
-      <rect x="33" y="4" width="1" height="1" fill="#F18B00" style="--pd:1.44s"/>
-      <rect x="32" y="5" width="1" height="1" fill="#F4C74F" style="--pd:1.44s"/>
-      <rect x="32" y="5" width="1" height="1" fill="#95C971" style="--pd:1.44s"/>
-      <rect x="31" y="7" width="1" height="1" fill="#d2356f" style="--pd:1.44s"/>
-      <rect x="32" y="6" width="1" height="1" fill="#95C971" style="--pd:1.45s"/>
-      <rect x="33" y="5" width="1" height="1" fill="#F4C74F" style="--pd:1.45s"/>
-      <rect x="32" y="7" width="1" height="1" fill="#2f6db0" style="--pd:1.46s"/>
-      <rect x="31" y="8" width="1" height="1" fill="#d2356f" style="--pd:1.47s"/>
-      <rect x="34" y="4" width="1" height="1" fill="#F18B00" style="--pd:1.47s"/>
-      <rect x="33" y="6" width="1" height="1" fill="#95C971" style="--pd:1.47s"/>
-      <rect x="34" y="5" width="1" height="1" fill="#F18B00" style="--pd:1.48s"/>
-      <rect x="32" y="8" width="1" height="1" fill="#d2356f" style="--pd:1.48s"/>
-      <rect x="34" y="6" width="1" height="1" fill="#F4C74F" style="--pd:1.49s"/>
-      <rect x="33" y="7" width="1" height="1" fill="#2f6db0" style="--pd:1.50s"/>
-      <rect x="33" y="7" width="1" height="1" fill="#95C971" style="--pd:1.50s"/>
-      <rect x="35" y="5" width="1" height="1" fill="#F18B00" style="--pd:1.50s"/>
-      <rect x="33" y="8" width="1" height="1" fill="#2f6db0" style="--pd:1.51s"/>
-      <rect x="34" y="7" width="1" height="1" fill="#95C971" style="--pd:1.51s"/>
-      <rect x="32" y="9" width="1" height="1" fill="#d2356f" style="--pd:1.52s"/>
-      <rect x="35" y="6" width="1" height="1" fill="#F18B00" style="--pd:1.53s"/>
-      <rect x="33" y="9" width="1" height="1" fill="#d2356f" style="--pd:1.53s"/>
-      <rect x="35" y="6" width="1" height="1" fill="#F4C74F" style="--pd:1.53s"/>
-      <rect x="35" y="7" width="1" height="1" fill="#F4C74F" style="--pd:1.54s"/>
-      <rect x="36" y="6" width="1" height="1" fill="#F18B00" style="--pd:1.54s"/>
-      <rect x="34" y="8" width="1" height="1" fill="#2f6db0" style="--pd:1.54s"/>
-      <rect x="34" y="8" width="1" height="1" fill="#95C971" style="--pd:1.55s"/>
-      <rect x="35" y="8" width="1" height="1" fill="#95C971" style="--pd:1.56s"/>
-      <rect x="34" y="9" width="1" height="1" fill="#2f6db0" style="--pd:1.56s"/>
-      <rect x="36" y="7" width="1" height="1" fill="#F18B00" style="--pd:1.57s"/>
-      <rect x="36" y="7" width="1" height="1" fill="#F4C74F" style="--pd:1.57s"/>
-      <rect x="34" y="9" width="1" height="1" fill="#d2356f" style="--pd:1.57s"/>
-      <rect x="34" y="10" width="1" height="1" fill="#d2356f" style="--pd:1.58s"/>
-      <rect x="37" y="7" width="1" height="1" fill="#F18B00" style="--pd:1.58s"/>
-      <rect x="36" y="8" width="1" height="1" fill="#F4C74F" style="--pd:1.58s"/>
-      <rect x="35" y="9" width="1" height="1" fill="#2f6db0" style="--pd:1.59s"/>
-      <rect x="35" y="9" width="1" height="1" fill="#95C971" style="--pd:1.60s"/>
-      <rect x="36" y="9" width="1" height="1" fill="#95C971" style="--pd:1.60s"/>
-      <rect x="37" y="8" width="1" height="1" fill="#F18B00" style="--pd:1.61s"/>
-      <rect x="35" y="10" width="1" height="1" fill="#2f6db0" style="--pd:1.61s"/>
-      <rect x="37" y="8" width="1" height="1" fill="#F4C74F" style="--pd:1.61s"/>
-      <rect x="37" y="9" width="1" height="1" fill="#F4C74F" style="--pd:1.62s"/>
-      <rect x="38" y="8" width="1" height="1" fill="#F18B00" style="--pd:1.63s"/>
-      <rect x="34" y="11" width="1" height="1" fill="#d2356f" style="--pd:1.63s"/>
-      <rect x="35" y="11" width="1" height="1" fill="#d2356f" style="--pd:1.63s"/>
-      <rect x="36" y="10" width="1" height="1" fill="#95C971" style="--pd:1.64s"/>
-      <rect x="36" y="10" width="1" height="1" fill="#2f6db0" style="--pd:1.64s"/>
-      <rect x="38" y="9" width="1" height="1" fill="#F18B00" style="--pd:1.65s"/>
-      <rect x="37" y="10" width="1" height="1" fill="#95C971" style="--pd:1.65s"/>
-      <rect x="36" y="11" width="1" height="1" fill="#2f6db0" style="--pd:1.65s"/>
-      <rect x="38" y="10" width="1" height="1" fill="#F4C74F" style="--pd:1.66s"/>
-      <rect x="35" y="12" width="1" height="1" fill="#d2356f" style="--pd:1.67s"/>
-      <rect x="39" y="9" width="1" height="1" fill="#F18B00" style="--pd:1.67s"/>
-      <rect x="37" y="11" width="1" height="1" fill="#95C971" style="--pd:1.68s"/>
-      <rect x="39" y="10" width="1" height="1" fill="#F18B00" style="--pd:1.68s"/>
-      <rect x="36" y="12" width="1" height="1" fill="#d2356f" style="--pd:1.69s"/>
-      <rect x="37" y="12" width="1" height="1" fill="#2f6db0" style="--pd:1.70s"/>
-      <rect x="38" y="11" width="1" height="1" fill="#F4C74F" style="--pd:1.70s"/>
-      <rect x="38" y="11" width="1" height="1" fill="#95C971" style="--pd:1.71s"/>
-      <rect x="39" y="11" width="1" height="1" fill="#F4C74F" style="--pd:1.71s"/>
-      <rect x="38" y="12" width="1" height="1" fill="#95C971" style="--pd:1.71s"/>
-      <rect x="36" y="13" width="1" height="1" fill="#d2356f" style="--pd:1.71s"/>
-      <rect x="39" y="11" width="1" height="1" fill="#F18B00" style="--pd:1.72s"/>
-      <rect x="40" y="11" width="1" height="1" fill="#F18B00" style="--pd:1.72s"/>
-      <rect x="39" y="12" width="1" height="1" fill="#F4C74F" style="--pd:1.73s"/>
-      <rect x="37" y="13" width="1" height="1" fill="#2f6db0" style="--pd:1.73s"/>
-      <rect x="40" y="12" width="1" height="1" fill="#F18B00" style="--pd:1.75s"/>
-      <rect x="38" y="13" width="1" height="1" fill="#95C971" style="--pd:1.75s"/>
-      <rect x="37" y="14" width="1" height="1" fill="#d2356f" style="--pd:1.75s"/>
-      <rect x="38" y="13" width="1" height="1" fill="#2f6db0" style="--pd:1.76s"/>
-      <rect x="39" y="13" width="1" height="1" fill="#F4C74F" style="--pd:1.77s"/>
-      <rect x="39" y="13" width="1" height="1" fill="#95C971" style="--pd:1.77s"/>
-      <rect x="38" y="14" width="1" height="1" fill="#2f6db0" style="--pd:1.77s"/>
-      <rect x="40" y="13" width="1" height="1" fill="#F4C74F" style="--pd:1.78s"/>
-      <rect x="40" y="13" width="1" height="1" fill="#F18B00" style="--pd:1.78s"/>
-      <rect x="41" y="13" width="1" height="1" fill="#F18B00" style="--pd:1.79s"/>
-      <rect x="39" y="14" width="1" height="1" fill="#95C971" style="--pd:1.79s"/>
-      <rect x="37" y="15" width="1" height="1" fill="#d2356f" style="--pd:1.79s"/>
-      <rect x="40" y="14" width="1" height="1" fill="#F4C74F" style="--pd:1.80s"/>
-      <rect x="38" y="15" width="1" height="1" fill="#2f6db0" style="--pd:1.81s"/>
-      <rect x="41" y="14" width="1" height="1" fill="#F18B00" style="--pd:1.82s"/>
-      <rect x="39" y="15" width="1" height="1" fill="#95C971" style="--pd:1.82s"/>
-      <rect x="37" y="16" width="1" height="1" fill="#d2356f" style="--pd:1.83s"/>
-      <rect x="40" y="15" width="1" height="1" fill="#F4C74F" style="--pd:1.84s"/>
-      <rect x="38" y="16" width="1" height="1" fill="#d2356f" style="--pd:1.84s"/>
-      <rect x="41" y="15" width="1" height="1" fill="#F18B00" style="--pd:1.85s"/>
-      <rect x="38" y="16" width="1" height="1" fill="#2f6db0" style="--pd:1.85s"/>
-      <rect x="39" y="16" width="1" height="1" fill="#2f6db0" style="--pd:1.85s"/>
-      <rect x="40" y="15" width="1" height="1" fill="#95C971" style="--pd:1.85s"/>
-      <rect x="40" y="16" width="1" height="1" fill="#95C971" style="--pd:1.86s"/>
-      <rect x="41" y="15" width="1" height="1" fill="#F4C74F" style="--pd:1.86s"/>
-      <rect x="42" y="15" width="1" height="1" fill="#F18B00" style="--pd:1.86s"/>
-      <rect x="41" y="16" width="1" height="1" fill="#F4C74F" style="--pd:1.87s"/>
-      <rect x="38" y="17" width="1" height="1" fill="#d2356f" style="--pd:1.87s"/>
-      <rect x="42" y="16" width="1" height="1" fill="#F18B00" style="--pd:1.88s"/>
-      <rect x="39" y="17" width="1" height="1" fill="#2f6db0" style="--pd:1.88s"/>
-      <rect x="40" y="17" width="1" height="1" fill="#95C971" style="--pd:1.89s"/>
-      <rect x="41" y="17" width="1" height="1" fill="#F4C74F" style="--pd:1.90s"/>
-      <rect x="42" y="17" width="1" height="1" fill="#F18B00" style="--pd:1.90s"/>
-      <rect x="38" y="18" width="1" height="1" fill="#d2356f" style="--pd:1.91s"/>
-      <rect x="39" y="18" width="1" height="1" fill="#2f6db0" style="--pd:1.92s"/>
-      <rect x="40" y="18" width="1" height="1" fill="#95C971" style="--pd:1.92s"/>
-      <rect x="41" y="18" width="1" height="1" fill="#F4C74F" style="--pd:1.93s"/>
-      <rect x="42" y="18" width="1" height="1" fill="#F18B00" style="--pd:1.94s"/>
-      <rect x="38" y="19" width="1" height="1" fill="#d2356f" style="--pd:1.94s"/>
-      <rect x="39" y="19" width="1" height="1" fill="#2f6db0" style="--pd:1.95s"/>
-      <rect x="40" y="19" width="1" height="1" fill="#95C971" style="--pd:1.95s"/>
-      <rect x="41" y="19" width="1" height="1" fill="#F4C74F" style="--pd:1.96s"/>
-      <rect x="42" y="19" width="1" height="1" fill="#F18B00" style="--pd:1.97s"/>
-      <rect x="38" y="20" width="1" height="1" fill="#d2356f" style="--pd:1.98s"/>
-      <rect x="39" y="20" width="1" height="1" fill="#2f6db0" style="--pd:1.98s"/>
-      <rect x="40" y="20" width="1" height="1" fill="#95C971" style="--pd:1.99s"/>
-      <rect x="41" y="20" width="1" height="1" fill="#F4C74F" style="--pd:1.99s"/>
-      <rect x="42" y="20" width="1" height="1" fill="#F18B00" style="--pd:1.99s"/>
-      <rect x="38" y="21" width="1" height="1" fill="#d2356f" style="--pd:2.02s"/>
-      <rect x="40" y="21" width="1" height="1" fill="#95C971" style="--pd:2.02s"/>
-      <rect x="39" y="21" width="1" height="1" fill="#2f6db0" style="--pd:2.02s"/>
-      <rect x="41" y="21" width="1" height="1" fill="#F4C74F" style="--pd:2.02s"/>
-      <rect x="42" y="21" width="1" height="1" fill="#F18B00" style="--pd:2.02s"/>
-      <rect x="43" y="21" width="1" height="1" fill="#F18B00" style="--pd:2.05s"/>
-      <rect x="42" y="21" width="1" height="1" fill="#F4C74F" style="--pd:2.05s"/>
-      <rect x="41" y="21" width="1" height="1" fill="#95C971" style="--pd:2.05s"/>
-      <rect x="40" y="21" width="1" height="1" fill="#2f6db0" style="--pd:2.05s"/>
-      <rect x="39" y="21" width="1" height="1" fill="#d2356f" style="--pd:2.05s"/>
-      <rect x="2" y="18" width="4" height="1" fill="rgba(61,69,64,.16)" style="--pd:0.05s"/>
-      <rect x="0" y="19" width="9" height="2" fill="rgba(61,69,64,.16)" style="--pd:0.05s"/>
-      <rect x="1" y="21" width="7" height="1" fill="rgba(61,69,64,.16)" style="--pd:0.05s"/>
-      <rect x="38" y="18" width="4" height="1" fill="rgba(61,69,64,.16)" style="--pd:2.1s"/>
-      <rect x="35" y="19" width="9" height="2" fill="rgba(61,69,64,.16)" style="--pd:2.1s"/>
-      <rect x="36" y="21" width="7" height="1" fill="rgba(61,69,64,.16)" style="--pd:2.1s"/>
-    </svg>
-  </div>
-  <div class="eyebrow bloom" style="--d:.1s;position:relative;z-index:2">Next Step 3 — Forecast</div>
-  <h2 class="bloom" style="--d:.22s;font-size:54px;line-height:1.35;position:relative;z-index:2">GAS で<span class="pxmark" style="--d:.9s">将来見込み</span>を自動算出</h2>
-  <p class="bloom" style="--d:.4s;font-size:20px;line-height:1.9;margin-top:14px;position:relative;z-index:2">最後はスプレッドシート側。たまっていくデータから<b>「今月はどこに着地しそうか」</b>を毎朝計算させる。</p>
-  <div class="prompt step" data-step="1" style="margin-top:24px">
-    <button class="copybtn" type="button"><svg width="14" height="14" viewBox="0 0 14 14" shape-rendering="crispEdges"><rect x="4" y="1" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="1" y="4" width="9" height="9" fill="#fff" stroke="currentColor" stroke-width="2"/></svg><span>コピー</span></button>
-    <div class="p-tag">コピペ用プロンプト(チャットに送る) 〈【 】は置き換えて送信〉</div>
-    <p class="ctext" style="font-size:14px;line-height:1.72">スプレッドシート「【スプレッドシートの名前】」の『GAデータ』シートには、日別のセッション数・表示回数・アクティブユーザー数が毎日たまっていきます。GAS(Google Apps Script)で、当月の月末着地見込みを自動計算する仕組みを作ってください。私はコードが書けない前提でお願いします。(1) スプレッドシートの「拡張機能 → Apps Script」を開くところから、コードをどこに貼り付けて、どう保存・実行するかまで、画面のどこを押すかを具体的に案内してください。(2) 計算のロジックは「当月の実績 + 直近7日平均 × 残り日数」を基本に、私にも分かるように説明してください。もっと良い方法があれば提案も歓迎です。(3) 結果は『見込み』シートに、当月実績・日次ペース・月末見込み・前月同期比が一目で分かる形で書き出してください。(4) コードには日本語のコメントを付けてください。(5) 毎朝8時に自動で再計算するトリガーを設定してください。初回実行で出る権限の警告画面(「このアプリは確認されていません」など)の進み方も教えてください。(6) 手動で1回実行して、数字が合っているか一緒に確認してください。</p>
-  </div>
-  <div class="wcard step" data-step="2" style="margin-top:18px;--wc:rgba(55,118,28,.5)">
-    <div class="p-tag">できあがったら——あとは毎朝見るだけ</div>
-    <p style="font-size:16.5px">毎朝『見込み』シートを開くだけ。おかしな数字の日はキャプチャしてチャットへ。<b>「グラフも足して」「広告経由だけ分けて」——改修はぜんぶ会話でできる。</b></p>
-  </div>
-  <p class="hero-line step" data-step="3" style="font-size:26px;margin-top:26px">実績を眺める道具が、<span style="color:var(--o2)">先を見通す道具</span>に変わる。</p>
 </section>
 
 <!-- ===== 13. おわりに(一枝フィナーレ) ===== -->
